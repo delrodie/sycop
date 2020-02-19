@@ -2,56 +2,131 @@
 <html lang="fr">
     <head>
         <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <title>{% block title %}Welcome!{% endblock %}</title>
         {% block stylesheets %}
-            <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+            <link rel="stylesheet" href="{{ asset('assets/vendors/mdi/css/materialdesignicons.min.css') }}">
+            <link rel="stylesheet" href="{{ asset('assets/vendors/simple-line-icons/css/simple-line-icons.css') }}">
+            <link rel="stylesheet" href="{{ asset('assets/vendors/flag-icon-css/css/flag-icon.min.css') }}">
+            <link rel="stylesheet" href="{{ asset('assets/vendors/css/vendor.bundle.base.css') }}">
+            <link rel="stylesheet" href="{{ asset('assets/vendors/font-awesome/css/font-awesome.min.css') }}">
+            <link rel="stylesheet" href="{{ asset('assets/vendors/jquery-bar-rating/fontawesome-stars.css') }}">
+            <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
         {% endblock %}
+        <link rel="shortcut icon" href="{{ asset('favicon.ico') }}">
     </head>
     <body>
-        <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-            <a class="navbar-brand" href="{{ path('homepage') }}">
-                <img src="{{ asset('doc/icon_bw.png') }}" width="30" alt=""> Symfony 4
-            </a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav mr-auto">
-                    <li class="nav-item active">
-                        <a class="nav-link" href="#">Accueil</a>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Articles
-                        </a>
-                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" href="{{ path('article_index') }}">Liste</a>
-                            <a class="dropdown-item" href="{{ path('article_new') }}">Ajouter</a>
-                        </div>
-                    </li>
-                    {% if is_granted('ROLE_SUPER_ADMIN') %}
-
+        <div class="container-scroller">
+            <nav class="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
+                <div class="text-center navbar-brand-wrapper d-flex align-items-top justify-content-center">
+                  <!--  <a class="navbar-brand brand-logo" href="{{ path('homepage') }}"><img src="{{ asset('assets/images/logo.png') }}" alt="logo"/></a>
+                    <a class="navbar-brand brand-logo-mini" href="{{ path('homepage') }}"><img src="{{ asset('assets/images/logo.png') }}" alt="logo"/></a>
+                --></div>
+                <div class="navbar-menu-wrapper d-flex align-items-center">
+                    <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-toggle="minimize">
+                        <span class="icon-menu"></span>
+                    </button>
+                    <ul class="navbar-nav navbar-nav-right">
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <i class="fa fa-cog"></i> Paramètres
+                            <a class="nav-link count-indicator dropdown-toggle" id="messageDropdown" href="#" data-toggle="dropdown" aria-expanded="false">
+                                <i class="icon-user mx-0"></i>
+                                <span class="count"></span>
                             </a>
-                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" href="{{ path('user_index') }}">Utilisateurs</a>
+                            <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list" aria-labelledby="messageDropdown">
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item preview-item">
+                                    <div class="preview-item-content flex-grow">
+                                        <p class="font-weight-light small-text">Modifier le mot de passe</p>
+                                    </div>
+                                </a>
+                                <div class="dropdown-divider"></div>
+                                <div class="dropdown-divider"></div>
+                                <a href="{{ path('app_logout') }}" class="dropdown-item preview-item">
+                                    <div class="preview-item-content flex-grow">
+                                        <p class="font-weight-light small-text">Deconnexion</p>
+                                    </div>
+                                </a>
                             </div>
                         </li>
-                    {% endif %}
-                </ul>
-                {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
-                    <a href="{{ path('app_logout') }}" class="nav-link" style="color:#ffffff">Deconnexion</a>
-                {% endif %}
+                    </ul>
+                    <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button" data-toggle="offcanvas">
+                        <span class="icon-menu"></span>
+                    </button>
+                </div>
+            </nav>
+            <div class="container-fluid page-body-wrapper">
+                <div class="row row-offcanvas row-offcanvas-right">
+                    <nav class="sidebar sidebar-offcanvas" id="sidebar">
+                        <ul class="nav">
+                            <li class="nav-item nav-profile">
+                                <div class="nav-link">
+                                    <div class="profile-image">
+                                        <img src="{{ asset('assets/images/logo.png') }}" alt="image"/>
+                                        <span class="online-status online"></span>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="index.html">
+                                    <i class="icon-rocket menu-icon"></i>
+                                    <span class="menu-title">Tableau de bord</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">
+                                    <i class="icon-shield menu-icon"></i>
+                                    <span class="menu-title">Activités</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" data-toggle="collapse" href="#page-layouts" aria-expanded="false" aria-controls="page-layouts">
+                                    <i class="fa fa-users menu-icon"></i>
+                                    <span class="menu-title">Utilisateurs</span>
+                                </a>
+                                <div class="collapse" id="page-layouts">
+                                    <ul class="nav flex-column sub-menu">
+                                        <li class="nav-item d-none d-lg-block"> <a class="nav-link" href="#">Utilisateur</a></li>
+                                        <li class="nav-item"> <a class="nav-link" href="#">GEstionnaire</a></li>
+                                    </ul>
+                                </div>
+                            </li>
+                            <li class="nav-item d-none d-lg-block">
+                                <a class="nav-link" data-toggle="collapse" href="#sidebar-layouts" aria-expanded="false" aria-controls="sidebar-layouts">
+                                    <i class="fa fa-cog menu-icon"></i>
+                                    <span class="menu-title">Parametres</span>
+                                </a>
+                                <div class="collapse" id="sidebar-layouts">
+                                    <ul class="nav flex-column sub-menu">
+                                        <li class="nav-item"> <a class="nav-link" href="#">Compact menu</a></li>
+                                        <li class="nav-item"> <a class="nav-link" href="#">Icon menu</a></li>
+                                        <li class="nav-item"> <a class="nav-link" href="#">Sidebar Hidden</a></li>
+                                        <li class="nav-item"> <a class="nav-link" href="#">Sidebar Overlay</a></li>
+                                        <li class="nav-item"> <a class="nav-link" href="#">Sidebar Fixed</a></li>
+                                    </ul>
+                                </div>
+                            </li>
+                        </ul>
+                    </nav>
+                    <div class="content-wrapper">
+                        {% block body %}{% endblock %}
+                        <footer class="footer">
+                            <div class="container-fluid clearfix">
+                                <span class="text-muted d-block text-center text-sm-left d-sm-inline-block">Copyright © 2020 <a href="https://www.scoutascci.org" target="_blank">Association des Scouts Catholiques de Cote d'Ivoire</a>. Tous droits réservés.</span>
+                                <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center">By <a href="mailto:dieudonne@scoutasci.org">Projet et Innovation Technologique</a> </span>
+                            </div>
+                        </footer>
+                    </div>
+                </div>
             </div>
-        </nav>
-        {% block body %}{% endblock %}
+        </div>
+
         {% block javascripts %}
-            <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-            <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
-            <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+            <script src="{{ asset('assets/vendors/js/vendor.bundle.base.js') }}"></script>
+            <script src="{{ asset('assets/js/off-canvas.js') }}"></script>
+            <script src="{{ asset('assets/js/hoverable-collapse.js') }}"></script>
+            <script src="{{ asset('assets/js/misc.js') }}"></script>
+            <script src="{{ asset('assets/js/settings.js') }}"></script>
+            <script src="{{ asset('assets/js/todolist.js') }}"></script>
         {% endblock %}
     </body>
 </html>

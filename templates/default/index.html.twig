@@ -3,9 +3,52 @@
 {% block title %}Page d'accueil{% endblock %}
 
 {% block body %}
-        <div class="jumbotron jumbotron-fluid text-center">
-            <div class="container">
-                <h1>Accueil</h1>
+    <div class="row">
+        <div class="col-md-4 grid-margin stretch-card">
+            <div class="card">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between">
+                        <h6 class="card-title">Activité</h6>
+                    </div>
+                    <div class="list d-flex align-items-center border-bottom py-3">
+                        <div class="wrapper w-100 ml-3">
+                            <p class="mb-0"><b>Equipe nationale </b>Programme éducatif</p>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div class="d-flex align-items-center">
+
+                                    <p class="mb-0">
+                                        Lorem ipsum dolor sit...
+                                    </p>
+                                </div>
+                                <small class="text-muted ml-auto"><i class="mdi mdi-calendar text-muted mr-1"></i>20/02/2020</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
+        <div class="col-md-8 grid-margin stretch-card">
+            <div class="card">
+                <div class="card-body">
+                    <h6 class="card-title">Sales Difference</h6>
+                    <p>Sales difference with last year</p>
+                </div>
+                <div id="morris-area-example"></div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block javascripts %}
+    <script src="{{ asset('assets/vendors/js/vendor.bundle.base.js') }}"></script>
+    <script src="{{ asset('assets/vendors/jquery-bar-rating/jquery.barrating.min.js') }}"></script>
+    <script src="{{ asset('assets/vendors/chart.js/Chart.min.js') }}"></script>
+    <script src="{{ asset('assets/vendors/raphael/raphael.min.js') }}"></script>
+    <script src="{{ asset('assets/vendors/morris.js/morris.min.js') }}"></script>
+    <script src="{{ asset('assets/vendors/jquery-sparkline/jquery.sparkline.min.js') }}"></script>
+    <script src="{{ asset('assets/js/off-canvas.js') }}"></script>
+    <script src="{{ asset('assets/js/hoverable-collapse.js') }}"></script>
+    <script src="{{ asset('assets/js/misc.js') }}"></script>
+    <script src="{{ asset('assets/js/settings.js') }}"></script>
+    <script src="{{ asset('assets/js/todolist.js') }}"></script>
+    <script src="{{ asset('assets/js/dashboard.js') }}"></script>
 {% endblock %}
