@@ -1,0 +1,8 @@
+{{ form_start(form,{'attr':{'class':'forms-sample'}}) }}
+    {{ form_widget(form) }}
+    <div class="form-group">
+        {{ form_row(form.nom) }}
+    </div>
+    <button class="btn btn-success mr-2">{{ button_label|default('form.btnSave'|trans) }}</button>
+    <a href="{{ path('region_index') }}" class="btn btn-light">{{ 'form.btnCancel'|trans }}</a>
+{{ form_end(form) }}

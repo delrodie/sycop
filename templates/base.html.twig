@@ -3,7 +3,7 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <title>{% block title %}Welcome!{% endblock %}</title>
+        <title>{% block title %}SYCOP ::{% endblock %}</title>
         {% block stylesheets %}
             <link rel="stylesheet" href="{{ asset('assets/vendors/mdi/css/materialdesignicons.min.css') }}">
             <link rel="stylesheet" href="{{ asset('assets/vendors/simple-line-icons/css/simple-line-icons.css') }}">
@@ -97,7 +97,7 @@
                                 </a>
                                 <div class="collapse" id="sidebar-layouts">
                                     <ul class="nav flex-column sub-menu">
-                                        <li class="nav-item"> <a class="nav-link" href="#">Compact menu</a></li>
+                                        <li class="nav-item"> <a class="nav-link" href="{{ path('region_index') }}">Regions</a></li>
                                         <li class="nav-item"> <a class="nav-link" href="#">Icon menu</a></li>
                                         <li class="nav-item"> <a class="nav-link" href="#">Sidebar Hidden</a></li>
                                         <li class="nav-item"> <a class="nav-link" href="#">Sidebar Overlay</a></li>

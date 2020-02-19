@@ -1,0 +1,16 @@
+security:
+  'Invalid credentials.': 'Invalid credentials.'
+  'Please sign in': 'Please sign in'
+  'Username': 'Username'
+  'Password': 'Password'
+  btnSignIn: 'Se connecter'
+  RememberMe: "Se souvenir de moi"
+
+form:
+  btnSave : Save
+  btnCancel : Cancel
+  btnUpdate : Edit
+  btnDelete : Supprimer
+
+region:
+    confirmDelete : Are you sure you want to delete this item?

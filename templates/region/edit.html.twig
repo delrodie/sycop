@@ -1,0 +1,67 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Region{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <div class="col-sm-6 col-md-8 grid-margin stretch-card">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Liste des régions</h4>
+                    {% for label, messages in app.flashes(['success','danger']) %}
+                        {% for message in messages %}
+                            <div class="alert alert-{{label}} alert-dismissible fade show" role="alert">
+                                {{ message }}
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                        {% endfor %}
+                    {% endfor %}
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="table-responsive">
+                                <table id="order-listing" class="table">
+                                    <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Nom</th>
+                                        <th>Nombre de districts</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% for region in regions %}
+                                        <tr>
+                                            <td>{{ loop.index}}</td>
+                                            <td>{{ region.nom}}</td>
+                                            <td>{{ region.nombreDistrict}}</td>
+                                            <td>
+                                                <a href="#"><i class="fa fa-eye"></i> </a>|
+                                                <a href="{{ path('region_edit', {'slug': region.slug}) }}"><i class="fa fa-edit"></i></a>
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6 col-md-4 grid-margin stretch-card">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Enregistrement</h4>
+                    {{ include('region/_form.html.twig', {'button_label': 'form.btnUpdate'|trans}) }}
+                    <div class="row">
+                        <div class="col-12 text-right">
+                            {{ include('region/_delete_form.html.twig') }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
