@@ -1,0 +1,13 @@
+{{ form_start(form) }}
+    <div class="form-group">
+        {{ form_row(form.user) }}
+    </div>
+    <div class="form-group">
+        {{ form_row(form.district) }}
+    </div>
+    {{ form_widget(form) }}
+    <div class="form-group text-right">
+        <button class="btn btn-success">{{ button_label|default('form.btnSave'|trans) }}</button>
+    </div>
+
+{{ form_end(form) }}

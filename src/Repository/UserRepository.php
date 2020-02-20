@@ -36,6 +36,22 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         $this->_em->flush();
     }
 
+    /**
+     * @return \Doctrine\ORM\QueryBuilder
+     */
+    public function getListWithoutUser()
+    {
+        return $this->createQueryBuilder('u')
+                    ->where('u.roles LIKE :region')
+            ->orWhere('u.roles LIKE :nation')
+            ->orderBy('u.username','ASC')
+            ->setParameters([
+                'region' => '%ROLE_REGION%',
+                'nation' => '%ROLE_NATIONAL%'
+            ])
+            ;
+    }
+
     // /**
     //  * @return User[] Returns an array of User objects
     //  */

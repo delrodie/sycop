@@ -1,29 +1,26 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}{{parent()}} Gestion des utilisateurs{% endblock %}
+{% block title %}{{ parent()}} Gestion des gestionnaires{% endblock %}
 
 {% block body %}
     <section class="content-header">
         <h1>
             Sécurité
-            <small>Gestion des utilisateurs</small>
+            <small>Gestion des gestionnaires</small>
         </h1>
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="{{ path('homepage') }}"><i class="fa fa-dashboard"></i> Accueil</a></li>
             <li class="breadcrumb-item"> Sécurité</li>
-            <li class="breadcrumb-item active">Utilisateurs</li>
+            <li class="breadcrumb-item active">Gestionnaires</li>
         </ol>
     </section>
 
     <section class="content">
-        <div class="row mt-5 mb-5">
-            <div class="col text-right"><a href="{{ path('user_new') }}" class="btn btn-success">Ajouter un nouvel utilisateur</a></div>
-        </div>
         <div class="row">
-            <div class="col-sm-12 col-md-12 grid-margin stretch-card"   >
+            <div class="col-sm-6 col-md-8 grid-margin stretch-card"   >
                 <div class="card">
                     <div class="card-body">
-                        <h4 class="card-title">Liste des utilisateurs</h4>
+                        <h4 class="card-title">Liste des gestionnaires</h4>
                         {% for label, messages in app.flashes(['success','danger']) %}
                             {% for message in messages %}
                                 <div class="alert alert-{{label}} alert-dismissible fade show" role="alert">
@@ -43,41 +40,20 @@
                                         <tr class="text-center">
                                             <th class="text-center">Id</th>
                                             <th class="text-center">Login</th>
-                                            <th class="text-center">Email</th>
-                                            <th class="text-center">Roles</th>
+                                            <th class="text-center">District</th>
                                             <th class="text-center">actions</th>
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        {% for user in users %}
+                                        {% for gestionnaire in gestionnaires %}
                                             <tr>
                                                 <td>{{ loop.index }}</td>
-                                                <td>{{ user.username }}</td>
-                                                <td>{{ user.email }}</td>
-                                                <!--<td>{{ user.roles ? user.roles|json_encode : '' }}</td>-->
-                                                <td>
-                                                    {% if user.roles %}
-                                                        {% if user.roles|first == 'ROLE_SUPER_ADMIN' %}
-                                                            Super Admin
-                                                        {% elseif user.roles|last == 'ROLE_ADMIN' %}
-                                                            Administrateur
-                                                        {% elseif user.roles|last == 'ROLE_NATIONAL' %}
-                                                            National
-                                                        {% elseif user.roles|last == 'ROLE_REGION' %}
-                                                            Regional
-                                                        {% else %}
-                                                            District
-                                                        {% endif %}
-                                                    {% endif %}
-                                                </td>
+                                                <td>{{ gestionnaire.user.username }}</td>
+                                                <td>{{ gestionnaire.district.nom }}</td>
                                                 <td class="text-center">
-                                                    <a href="{{ path('user_show', {'id': user.id}) }}"><i class="fa fa-eye"></i></a> |
-                                                    <a href="{{ path('user_edit', {'id': user.id}) }}"><i class="fa fa-edit"></i></a>
+                                                    <a href="{{ path('gestionnaire_show', {'id': gestionnaire.id}) }}"><i class="fa fa-eye"></i></a> |
+                                                    <a href="{{ path('gestionnaire_edit', {'id': gestionnaire.id}) }}"><i class="fa fa-edit"></i></a>
                                                 </td>
-                                            </tr>
-                                        {% else %}
-                                            <tr>
-                                                <td colspan="6">no records found</td>
                                             </tr>
                                         {% endfor %}
                                         </tbody>
@@ -88,8 +64,25 @@
                     </div>
                 </div>
             </div>
+            <div class="col-sm-6 col-md-4 grid-margin stretch-card">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title">Modification</h4>
+                        {{ include('gestionnaire/_form.html.twig', {'button_label': 'form.btnUpdate'|trans}) }}
+                        <div class="row">
+                            <div class="col">
+                                {{ include('gestionnaire/_delete_form.html.twig') }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </section>
+{% endblock %}
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('ressources/assets/vendor_components/select2/dist/css/select2.min.css') }}">
 {% endblock %}
 {% block javascripts %}
     {{ parent() }}
@@ -104,4 +97,9 @@
     <script src="{{ asset('ressources/assets/vendor_plugins/DataTables-1.10.15/extensions/Buttons/js/buttons.html5.min.js') }}"></script>
     <script src="{{ asset('ressources/assets/vendor_plugins/DataTables-1.10.15/extensions/Buttons/js/buttons.print.min.js') }}"></script>
     <script src="{{ asset('ressources/js/pages/data-table.js') }}"></script>
+    <script src="{{ asset('ressources/assets/vendor_components/select2/dist/js/select2.full.js') }}"></script>
+    <script>
+        $('.select2').select2();
+    </script>
 {% endblock %}
+

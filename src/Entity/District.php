@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -41,6 +43,16 @@ class District
      * @ORM\Column(type="string", length=255)
      */
     private $slug;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Gestionnaire", mappedBy="district")
+     */
+    private $gestionnaires;
+
+    public function __construct()
+    {
+        $this->gestionnaires = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -103,6 +115,37 @@ class District
     public function setSlug(string $slug): self
     {
         $this->slug = $slug;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Gestionnaire[]
+     */
+    public function getGestionnaires(): Collection
+    {
+        return $this->gestionnaires;
+    }
+
+    public function addGestionnaire(Gestionnaire $gestionnaire): self
+    {
+        if (!$this->gestionnaires->contains($gestionnaire)) {
+            $this->gestionnaires[] = $gestionnaire;
+            $gestionnaire->setDistrict($this);
+        }
+
+        return $this;
+    }
+
+    public function removeGestionnaire(Gestionnaire $gestionnaire): self
+    {
+        if ($this->gestionnaires->contains($gestionnaire)) {
+            $this->gestionnaires->removeElement($gestionnaire);
+            // set the owning side to null (unless already changed)
+            if ($gestionnaire->getDistrict() === $this) {
+                $gestionnaire->setDistrict(null);
+            }
+        }
 
         return $this;
     }

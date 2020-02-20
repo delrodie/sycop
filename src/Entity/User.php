@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -40,6 +42,16 @@ class User implements UserInterface
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $email;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Gestionnaire", mappedBy="user")
+     */
+    private $gestionnaires;
+
+    public function __construct()
+    {
+        $this->gestionnaires = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -122,6 +134,37 @@ class User implements UserInterface
     public function setEmail(?string $email): self
     {
         $this->email = $email;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Gestionnaire[]
+     */
+    public function getGestionnaires(): Collection
+    {
+        return $this->gestionnaires;
+    }
+
+    public function addGestionnaire(Gestionnaire $gestionnaire): self
+    {
+        if (!$this->gestionnaires->contains($gestionnaire)) {
+            $this->gestionnaires[] = $gestionnaire;
+            $gestionnaire->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeGestionnaire(Gestionnaire $gestionnaire): self
+    {
+        if ($this->gestionnaires->contains($gestionnaire)) {
+            $this->gestionnaires->removeElement($gestionnaire);
+            // set the owning side to null (unless already changed)
+            if ($gestionnaire->getUser() === $this) {
+                $gestionnaire->setUser(null);
+            }
+        }
 
         return $this;
     }

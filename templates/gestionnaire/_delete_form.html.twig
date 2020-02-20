@@ -1,0 +1,5 @@
+<form method="post" action="{{ path('gestionnaire_delete', {'id': gestionnaire.id}) }}" onsubmit="return confirm('Voulez-vous vraiment supprimer le gestionnaire?');">
+    <input type="hidden" name="_method" value="DELETE">
+    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ gestionnaire.id) }}">
+    <button class="btn btn-danger">{{ 'form.btnDelete'|trans}}</button>
+</form>

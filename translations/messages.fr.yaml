@@ -22,3 +22,7 @@ district:
 
 departement:
   labelName : Nom
+
+gestionnaire:
+  username: Compte utilisateur
+  district: District

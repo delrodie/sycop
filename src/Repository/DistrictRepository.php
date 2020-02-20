@@ -19,6 +19,14 @@ class DistrictRepository extends ServiceEntityRepository
         parent::__construct($registry, District::class);
     }
 
+    public function getListWithoutDistrict()
+    {
+        return $this->createQueryBuilder('d')
+            ->where('d.nom LIKE :district')
+            ->setParameter('district', 'Equipe%')
+            ;
+    }
+
     // /**
     //  * @return District[] Returns an array of District objects
     //  */
