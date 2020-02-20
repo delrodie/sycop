@@ -20,7 +20,13 @@ class UserType extends AbstractType
             ->add('username', TextType::class,['attr'=>['class'=>"form-control",'placeholder'=>"Nom utilisateur",'autocomplete'=>"off"]])
             ->add('password', PasswordType::class,['attr'=>['class'=>'form-control','placeholder'=>"Le mot de passe"]])
             ->add('roles', ChoiceType::class,[
-                'choices'=>['Utilisateur'=>'ROLE_USER','Administrateur'=>'ROLE_ADMIN'],
+                'choices'=>[
+                    'District'=>'ROLE_DISTRICT',
+                    'Regional'=>'ROLE_REGION',
+                    'National'=>'ROLE_NATIONAL',
+                    'Administrateur'=>'ROLE_ADMIN',
+                    'Utilisateur'=>'ROLE_USER',
+                ],
                 'multiple'=>true,
                 'expanded'=>true
             ])

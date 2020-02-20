@@ -1,4 +1,38 @@
 {{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button class="btn btn-primary">{{ button_label|default('Save') }}</button>
+    <div class="form-group">
+        <div class="form-group">
+            {{ form_row(form.email) }}
+        </div>
+        <div class="form-group">
+            {{ form_row(form.username) }}
+        </div>
+        <div class="form-group">
+            {{ form_row(form.password) }}
+        </div>
+        <div class="col-12 custom-control custom-checkbox">
+            {{ form_widget(form.roles.0,{'attr':{'class':"custom-control-input"}})}}
+            <label class="custom-control-label" for="user_roles_0">District</label>
+        </div>
+        <div class="col-12 custom-control custom-checkbox">
+            {{ form_widget(form.roles.1,{'attr':{'class':"custom-control-input"}})}}
+            <label class="custom-control-label" for="user_roles_1">Equipe Régionale</label>
+        </div>
+        <div class="col-12 custom-control custom-checkbox">
+            {{ form_widget(form.roles.2,{'attr':{'class':"custom-control-input"}})}}
+            <label class="custom-control-label" for="user_roles_2">Equipe Nationale</label>
+        </div>
+        <div class="col-12 custom-control custom-checkbox">
+            {{ form_widget(form.roles.3,{'attr':{'class':"custom-control-input"}})}}
+            <label class="custom-control-label" for="user_roles_3">Administrateur</label>
+        </div>
+        <div class="col-12 custom-control custom-checkbox">
+            {{ form_widget(form.roles.4,{'attr':{'class':"custom-control-input"}})}}
+            <label class="custom-control-label" for="user_roles_4">Utilisateur</label>
+        </div>
+    </div>
+{{ form_widget(form) }}
+    <div class="text-right">
+        <button class="btn btn-success">{{ button_label|default('form.btnSave'|trans) }}</button>
+        <a href="{{ path('user_index') }}" class="btn btn-light">{{ 'form.btnCancel'|trans }}</a>
+    </div>
 {{ form_end(form) }}

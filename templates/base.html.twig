@@ -70,6 +70,7 @@
                         <li>
                             <a href="#"><i class="fa fa-calendar"></i> <span>Activités</span></a>
                         </li>
+                        {% if is_granted('ROLE_ADMIN') %}
                         <li {% if current_menu is defined and current_menu == 'Parametre'  %} class="treeview active" {% else %} class="treeview"{% endif %}>
                             <a href="#">
                                 <i class="fa fa-cog"></i>
@@ -84,19 +85,20 @@
                                 <li><a href="{{ path('departement_index') }}"><i class="fa fa-circle-o"></i> Departement</a></li>
                             </ul>
                         </li>
-                        <li class="treeview">
-                            <a href="#">
-                                <i class="fa fa-lock"></i>
-                                <span>Securité</span>
-                                <span class="pull-right-container">
+                            <li class="treeview">
+                                <a href="#">
+                                    <i class="fa fa-lock"></i>
+                                    <span>Securité</span>
+                                    <span class="pull-right-container">
                                   <i class="fa fa-angle-left pull-right"></i>
                                 </span>
-                            </a>
-                            <ul class="treeview-menu">
-                                <li><a href="#"><i class="fa fa-circle-o"></i> Utilisateur</a></li>
-                                <li><a href="#"><i class="fa fa-circle-o"></i> Gestionnaire</a></li>
-                            </ul>
-                        </li>
+                                </a>
+                                <ul class="treeview-menu">
+                                    <li><a href="{{ path('user_index') }}"><i class="fa fa-circle-o"></i> Utilisateur</a></li>
+                                    <li><a href="#"><i class="fa fa-circle-o"></i> Gestionnaire</a></li>
+                                </ul>
+                            </li>
+                        {% endif %}
                     </ul>
                 </section>
                 <div class="sidebar-footer">

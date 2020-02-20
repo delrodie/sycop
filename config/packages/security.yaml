@@ -4,7 +4,10 @@ security:
             algorithm: auto
 
     role_hierarchy:
-        ROLE_ADMIN: ROLE_USER
+        ROLE_DISTRICT: ROLE_USER
+        ROLE_REGION: ROLE_DISTRICT
+        ROLE_NATIONAL: ROLE_USER
+        ROLE_ADMIN: [ROLE_REGION, ROLE_NATIONAL]
         ROLE_SUPER_ADMIN: [ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH]
 
     # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers

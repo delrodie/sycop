@@ -12,7 +12,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 /**
- * @Route("/user")
+ * @Route("/admin/user")
  */
 class UserController extends AbstractController
 {
@@ -40,6 +40,8 @@ class UserController extends AbstractController
             $user->setPassword($userPasswordEncoder->encodePassword($user, $user->getPassword()));
             $entityManager->persist($user);
             $entityManager->flush();
+
+            $this->addFlash('success', $user->getUsername()." a été enregistré avec succès");
 
             return $this->redirectToRoute('user_index');
         }
