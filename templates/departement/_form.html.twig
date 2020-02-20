@@ -1,0 +1,8 @@
+{{ form_start(form) }}
+    <div class="form-group">
+        {{ form_row(form.libelle) }}
+    </div>
+    {{ form_widget(form) }}
+    <button class="btn btn-success">{{ button_label|default('form.btnSave'|trans) }}</button>
+<a href="{{ path('departement_index') }}" class="btn btn-light">{{ 'form.btnCancel'|trans }}</a>
+{{ form_end(form) }}

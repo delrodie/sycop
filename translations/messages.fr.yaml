@@ -19,3 +19,6 @@ district:
   labelName : Nom
   labelLocalite : Localite
   labelRegion : Region
+
+departement:
+  labelName : Nom
