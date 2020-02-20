@@ -19,6 +19,14 @@ class RegionRepository extends ServiceEntityRepository
         parent::__construct($registry, Region::class);
     }
 
+    /**
+     * @return \Doctrine\ORM\QueryBuilder
+     */
+    public function liste()
+    {
+        return $this->createQueryBuilder('r')->orderBy('r.nom');
+    }
+
     // /**
     //  * @return Region[] Returns an array of Region objects
     //  */

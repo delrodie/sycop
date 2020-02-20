@@ -5,35 +5,30 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <title>{% block title %}Connexion{% endblock %}</title>
         {% block stylesheets %}
-            <link rel="stylesheet" href="{{ asset('assets/vendors/mdi/css/materialdesignicons.min.css') }}">
-            <link rel="stylesheet" href="{{ asset('assets/vendors/simple-line-icons/css/simple-line-icons.css') }}">
-            <link rel="stylesheet" href="{{ asset('assets/vendors/flag-icon-css/css/flag-icon.min.css') }}">
-            <link rel="stylesheet" href="{{ asset('assets/vendors/css/vendor.bundle.base.css') }}">
-            <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
+            <link rel="stylesheet" href="{{ absolute_url(asset('ressources/assets/vendor_components/bootstrap/dist/css/bootstrap.css')) }}">
+            <link rel="stylesheet" href="{{ asset('ressources/css/font-awesome.min.css') }}">
+            <link rel="stylesheet" href="{{ asset('ressources/css/master_style.css') }}">
+            <link rel="stylesheet" href="{{ asset('ressources/css/skins/_all-skins.css') }}">
         {% endblock %}
         <link rel="shortcut icon" href="{{ asset('favicon.ico') }}">
     </head>
-    <body>
-        <div class="container-scroller">
-            <div class="container-fluid page-body-wrapper">
-                <div class="row">
-                    <div class="content-wrapper full-page-wrapper d-flex align-items-center auth login-full-bg">
-                        <div class="row w-100">
-                            <div class="col-lg-4 mx-auto">
-                                {% block body %}{% endblock %}
-                            </div>
-                        </div>
-                    </div>
+    <body class="hold-transition login-page" style="background: url({{ asset('ressources/images/bg-login.jpg')}}) center center no-repeat #d2d6de;">
+        <div class="login-box">
+            <div class="login-logo">
+                <a href="{{ path('app_login') }}">SYCOP</a>
+            </div>
+            <div class="login-box-body">
+                {% block body %}{% endblock %}
+                <div class="social-auth-links text-center">
+                    <a href="https://facebook.com/scoutascci" class="btn btn-social-icon btn-circle btn-facebook" target="_blank"><i class="fa fa-facebook"></i></a>
+                    <a href="https://scoutascci.org/" class="btn btn-social-icon btn-circle btn-google" target="_blank"><i class="fa fa-globe"></i></a>
                 </div>
             </div>
         </div>
-
         {% block javascripts %}
-            <script src="{{ asset('assets/vendors/js/vendor.bundle.base.js') }}"></script>
-            <script src="{{ asset('assets/js/off-canvas.js') }}"></script>
-            <script src="{{ asset('assets/js/misc.js') }}"></script>
-            <script src="{{ asset('assets/js/settings.js') }}"></script>
-            <script src="{{ asset('assets/js/todolist.js') }}"></script>
+            <script src="{{ asset('ressources/assets/vendor_components/jquery/dist/jquery.min.js') }}"></script>
+            <script src="{{ asset('ressources/assets/vendor_components/popper/dist/popper.min.js') }}"></script>
+            <script src="{{ asset('ressources/assets/vendor_components/bootstrap/dist/js/bootstrap.min.js') }}"></script>
         {% endblock %}
     </body>
 </html>

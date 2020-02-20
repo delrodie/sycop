@@ -46,6 +46,7 @@ class RegionController extends AbstractController
             'regions' => $regionRepository->findAll(),
             'region' => $region,
             'form' => $form->createView(),
+            'current_menu' => 'Parametre'
         ]);
     }
 
@@ -103,6 +104,7 @@ class RegionController extends AbstractController
             'regions'=> $regionRepository->findAll(),
             'region' => $region,
             'form' => $form->createView(),
+            'current_menu' => 'Parametre'
         ]);
     }
 

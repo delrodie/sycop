@@ -1,0 +1,82 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit District{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <div class="col-sm-6 col-md-8 grid-margin stretch-card">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Liste des districs</h4>
+                    {% for label, messages in app.flashes(['success','danger']) %}
+                        {% for message in messages %}
+                            <div class="alert alert-{{label}} alert-dismissible fade show" role="alert">
+                                {{ message }}
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                        {% endfor %}
+                    {% endfor %}
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="table-responsive">
+                                <table id="order-listing" class="table">
+                                    <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Region</th>
+                                        <th>District</th>
+                                        <th>Localité</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% for district in districts %}
+                                        <tr>
+                                            <td>{{ loop.index}}</td>
+                                            <td>{{ district.region.nom}}</td>
+                                            <td>{{ district.nom}}</td>
+                                            <td>{{ district.localite}}</td>
+                                            <td>
+                                                <a href="#"><i class="fa fa-eye"></i> </a>|
+                                                <a href="{{ path('district_edit', {'slug': district.slug}) }}"><i class="fa fa-edit"></i></a>
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6 col-md-4 grid-margin stretch-card">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Modification</h4>
+                    {{ include('district/_form.html.twig', {'button_label': 'form.btnUpdate'|trans}) }}
+                    <div class="row">
+                        <div class="col-12 text-right">
+                            {{ include('district/_delete_form.html.twig') }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('assets/vendors/select2/select2.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/vendors/select2-bootstrap-theme/select2-bootstrap.min.css') }}">
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('assets/vendors/datatables.net/jquery.dataTables.js') }}"></script>
+    <script src="{{ asset('assets/vendors/datatables.net-bs4/dataTables.bootstrap4.js') }}"></script>
+    <script src="{{ asset('assets/js/data-table.js') }}"></script>
+    <script src="{{ asset('assets/vendors/select2/select2.min.js') }}"></script>
+    <script src="{{ asset('assets/js/select2.js') }}"></script>
+{% endblock %}

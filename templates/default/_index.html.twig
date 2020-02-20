@@ -1,0 +1,503 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Page d'accueil{% endblock %}
+
+{% block body %}
+    <section class="content-header">
+        <h1>
+            Dashboard
+            <small>Control panel</small>
+        </h1>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+            <li class="breadcrumb-item active">Dashboard</li>
+        </ol>
+    </section>
+
+    <section class="content">
+
+        <div class="row">
+
+            <div class="col-12 col-lg-4">
+                <div class="box box-body bg-purple">
+                    <div class="flexbox">
+                        <div id="linechart" >1,4,3,7,6,4,8,9,6,8,12</div>
+                        <div class="text-right">
+                            <span>New Users</span><br>
+                            <span>
+                    <i class="ion-ios-arrow-up text-white"></i>
+                    <span class="font-size-18 ml-1">113</span>
+                  </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12 col-lg-4">
+                <div class="box box-body bg-green">
+                    <div class="flexbox">
+                        <div id="barchart">1,4,3,7,6,4,8,9,6,8,12</div>
+                        <div class="text-right">
+                            <span>Monthly Sale</span><br>
+                            <span>
+                    <i class="ion-ios-arrow-up text-white"></i>
+                    <span class="font-size-18 ml-1">%80</span>
+                  </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12 col-lg-4">
+                <div class="box box-body bg-red">
+                    <div class="flexbox">
+                        <div id="discretechart">1,4,3,7,6,4,8,9,6,8,12</div>
+                        <div class="text-right">
+                            <span>Impressions</span><br>
+                            <span>
+                    <i class="ion-ios-arrow-up text-white"></i>
+                    <span class="font-size-18 ml-1">%80</span>
+                  </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main row -->
+        <div class="row">
+            <!-- Left col -->
+            <div class="col-xl-6">
+                <div class="box">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Sales Overview</h3>
+
+                        <div class="box-tools pull-right">
+                            <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                            <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                        </div>
+                    </div>
+                    <div class="box-body">
+                        <div class="chart">
+                            <canvas id="areaChart" style="height:340px"></canvas>
+                        </div>
+                    </div>
+                    <!-- /.box-body -->
+                </div>
+            </div>
+            <div class="col-xl-6">
+                <!-- solid sales graph -->
+                <div class="box">
+                    <div class="box-header">
+                        <i class="fa fa-th"></i>
+
+                        <h3 class="box-title">Sales Graph</h3>
+
+                        <div class="box-tools pull-right">
+                            <button type="button" class="btn btn-white btn-sm" data-widget="collapse"><i class="fa fa-minus"></i>
+                            </button>
+                            <button type="button" class="btn btn-white btn-sm" data-widget="remove"><i class="fa fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="box-body border-radius-none">
+                        <div class="chart" id="line-chart" style="height: 237px;"></div>
+                    </div>
+                    <!-- /.box-body -->
+                    <div class="box-footer">
+                        <div class="row">
+                            <div class="col text-center" style="border-right: 1px solid #f4f4f4">
+                                <input type="text" class="knob" data-readonly="true" value="30" data-width="60" data-height="60"
+                                       data-fgColor="#7460ee">
+
+                                <div class="knob-label">Mail Orders</div>
+                            </div>
+                            <!-- ./col -->
+                            <div class="col text-center" style="border-right: 1px solid #f4f4f4">
+                                <input type="text" class="knob" data-readonly="true" value="60" data-width="60" data-height="60"
+                                       data-fgColor="#7460ee">
+
+                                <div class="knob-label">Online Orders</div>
+                            </div>
+                            <!-- ./col -->
+                            <div class="col text-center">
+                                <input type="text" class="knob" data-readonly="true" value="40" data-width="60" data-height="60"
+                                       data-fgColor="#7460ee">
+
+                                <div class="knob-label">In-Store Orders</div>
+                            </div>
+                            <!-- ./col -->
+                        </div>
+                        <!-- /.row -->
+                    </div>
+                    <!-- /.box-footer -->
+                </div>
+                <!-- /.box -->
+            </div>
+            <div class="col-xl-4">
+                <!-- Chat box -->
+                <div class="box">
+                    <div class="box-header">
+                        <i class="fa fa-comments"></i>
+
+                        <h3 class="box-title">Chat Activity</h3>
+
+                        <div class="box-tools pull-right" data-toggle="tooltip" title="Status">
+                            <div class="btn-group" data-toggle="btn-toggle">
+                                <button type="button" class="btn btn-default btn-sm no-border green-btn"><i class="fa fa-square text-white"></i>
+                                </button>
+                                <button type="button" class="btn btn-default btn-sm no-border red-btn"><i class="fa fa-square text-white"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="box-body chat" id="chat-box">
+                        <!-- chat item -->
+                        <div class="item">
+                            <img src="../images/user4-128x128.jpg" alt="user image" class="online">
+
+                            <p class="message">
+                                <a href="#" class="name">
+                                    <small class="text-muted pull-right"><i class="fa fa-clock-o"></i> 4:15</small>
+                                    Smith doe
+                                </a>
+                                It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.
+                            </p>
+                        </div>
+                        <!-- /.item -->
+                        <!-- chat item -->
+                        <div class="item">
+                            <img src="../images/user3-128x128.jpg" alt="user image" class="offline">
+
+                            <p class="message">
+                                <a href="#" class="name">
+                                    <small class="text-muted pull-right"><i class="fa fa-clock-o"></i> 6:10</small>
+                                    Maical Jordan
+                                </a>
+                                It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.
+                            </p>
+                        </div>
+                        <!-- /.item -->
+                        <!-- chat item -->
+                        <div class="item">
+                            <img src="../images/user2-160x160.jpg" alt="user image" class="offline">
+
+                            <p class="message">
+                                <a href="#" class="name">
+                                    <small class="text-muted pull-right"><i class="fa fa-clock-o"></i> 7:30</small>
+                                    Adaom Clark
+                                </a>
+                                It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.
+                            </p>
+                        </div>
+                        <!-- /.item -->
+                        <!-- chat item -->
+                        <div class="item">
+                            <img src="../images/user4-128x128.jpg" alt="user image" class="online">
+
+                            <p class="message">
+                                <a href="#" class="name">
+                                    <small class="text-muted pull-right"><i class="fa fa-clock-o"></i> 4:15</small>
+                                    Smith doe
+                                </a>
+                                It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.
+                            </p>
+                        </div>
+                        <!-- /.item -->
+                        <!-- chat item -->
+                        <div class="item">
+                            <img src="../images/user3-128x128.jpg" alt="user image" class="offline">
+
+                            <p class="message">
+                                <a href="#" class="name">
+                                    <small class="text-muted pull-right"><i class="fa fa-clock-o"></i> 6:10</small>
+                                    Maical Jordan
+                                </a>
+                                It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.
+                            </p>
+                        </div>
+                        <!-- /.item -->
+                    </div>
+                    <!-- /.chat -->
+                    <div class="box-footer">
+                        <div class="input-group">
+                            <input class="form-control" placeholder="Type message...">
+
+                            <div class="input-group-btn">
+                                <button type="button" class="btn btn-success"><i class="fa fa-plus"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- /.box (chat box) -->
+            </div>
+            <div class="col-xl-5">
+
+                <!-- TO DO List -->
+                <div class="box">
+                    <div class="box-header">
+                        <i class="fa fa-file"></i>
+
+                        <h3 class="box-title">To Do List</h3>
+
+                        <div class="box-tools pull-right">
+                            <nav aria-label="Page navigation example">
+                                <ul class="pagination">
+                                    <li><a href="#">&laquo;</a></li>
+                                    <li><a href="#">1</a></li>
+                                    <li><a href="#">2</a></li>
+                                    <li><a href="#">3</a></li>
+                                    <li><a href="#">&raquo;</a></li>
+                                </ul>
+                            </nav>
+                        </div>
+                    </div>
+                    <!-- /.box-header -->
+                    <div class="box-body">
+                        <!-- See dist/js/pages/dashboard.js to activate the todoList plugin -->
+                        <form>
+                            <ul class="todo-list">
+                                <li>
+                                    <!-- drag handle -->
+                                    <span class="handle">
+                        <i class="fa fa-ellipsis-v"></i>
+                        <i class="fa fa-ellipsis-v"></i>
+                      </span>
+                                    <!-- checkbox -->
+                                    <label class="control control-checkbox">
+                                        <input type="checkbox" />
+                                        <div class="control_indicator"></div>
+                                    </label>
+                                    <!-- todo text -->
+                                    <span class="text">Lorem ipsum dolor sit amet</span>
+                                    <!-- Emphasis label -->
+                                    <small class="label label-danger"><i class="fa fa-clock-o"></i> 8 mins</small>
+                                    <!-- General tools such as edit or delete-->
+                                    <div class="tools">
+                                        <i class="fa fa-edit"></i>
+                                        <i class="fa fa-trash-o"></i>
+                                    </div>
+                                </li>
+                                <li>
+                      <span class="handle">
+                        <i class="fa fa-ellipsis-v"></i>
+                        <i class="fa fa-ellipsis-v"></i>
+                      </span>
+                                    <!-- checkbox -->
+                                    <label class="control control-checkbox">
+                                        <input type="checkbox" />
+                                        <div class="control_indicator"></div>
+                                    </label>
+                                    <span class="text">Praesent et metus sit amet</span>
+                                    <small class="label label-info"><i class="fa fa-clock-o"></i> 2 hours</small>
+                                    <div class="tools">
+                                        <i class="fa fa-edit"></i>
+                                        <i class="fa fa-trash-o"></i>
+                                    </div>
+                                </li>
+                                <li>
+                      <span class="handle">
+                        <i class="fa fa-ellipsis-v"></i>
+                        <i class="fa fa-ellipsis-v"></i>
+                      </span>
+                                    <!-- checkbox -->
+                                    <label class="control control-checkbox">
+                                        <input type="checkbox" />
+                                        <div class="control_indicator"></div>
+                                    </label>
+                                    <span class="text">Pellentesque feugiat quam eget</span>
+                                    <small class="label label-success"><i class="fa fa-clock-o"></i> 2 day</small>
+                                    <div class="tools">
+                                        <i class="fa fa-edit"></i>
+                                        <i class="fa fa-trash-o"></i>
+                                    </div>
+                                </li>
+                                <li>
+                      <span class="handle">
+                        <i class="fa fa-ellipsis-v"></i>
+                        <i class="fa fa-ellipsis-v"></i>
+                      </span>
+                                    <!-- checkbox -->
+                                    <label class="control control-checkbox">
+                                        <input type="checkbox" />
+                                        <div class="control_indicator"></div>
+                                    </label>
+                                    <span class="text">Pellentesque feugiat quam eget</span>
+                                    <small class="label label-success"><i class="fa fa-clock-o"></i> 2 day</small>
+                                    <div class="tools">
+                                        <i class="fa fa-edit"></i>
+                                        <i class="fa fa-trash-o"></i>
+                                    </div>
+                                </li>
+                                <li>
+                      <span class="handle">
+                        <i class="fa fa-ellipsis-v"></i>
+                        <i class="fa fa-ellipsis-v"></i>
+                      </span>
+                                    <!-- checkbox -->
+                                    <label class="control control-checkbox">
+                                        <input type="checkbox" />
+                                        <div class="control_indicator"></div>
+                                    </label>
+                                    <span class="text">Quisque rhoncus leo at ex</span>
+                                    <small class="label label-success"><i class="fa fa-clock-o"></i> 3 days</small>
+                                    <div class="tools">
+                                        <i class="fa fa-edit"></i>
+                                        <i class="fa fa-trash-o"></i>
+                                    </div>
+                                </li>
+                                <li>
+                      <span class="handle">
+                        <i class="fa fa-ellipsis-v"></i>
+                        <i class="fa fa-ellipsis-v"></i>
+                      </span>
+                                    <!-- checkbox -->
+                                    <label class="control control-checkbox">
+                                        <input type="checkbox" />
+                                        <div class="control_indicator"></div>
+                                    </label>
+                                    <span class="text">Nunc pulvinar dolor vel magna ultricies</span>
+                                    <small class="label label-warning"><i class="fa fa-clock-o"></i> 1 week</small>
+                                    <div class="tools">
+                                        <i class="fa fa-edit"></i>
+                                        <i class="fa fa-trash-o"></i>
+                                    </div>
+                                </li>
+                            </ul>
+                        </form>
+                    </div>
+                    <!-- /.box-body -->
+                    <div class="box-footer clearfix no-border">
+                        <button type="button" class="btn btn-blue pull-right"><i class="fa fa-plus"></i> Add item</button>
+                    </div>
+                </div>
+                <!-- /.box -->
+            </div>
+            <div class="col-xl-3 col-12">
+                <!-- small box -->
+                <div class="small-box bg-green">
+                    <div class="inner">
+                        <h3>67<sup style="font-size: 20px">%</sup></h3>
+
+                        <p>Sales Rate</p>
+                    </div>
+                    <div class="icon">
+                        <i class="fa fa-bar-chart"></i>
+                    </div>
+                    <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-right"></i></a>
+                </div>
+                <div class="small-box bg-purple">
+                    <div class="inner">
+                        <h3>78</h3>
+
+                        <p>User Registrations</p>
+                    </div>
+                    <div class="icon">
+                        <i class="fa fa-user-plus"></i>
+                    </div>
+                    <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-right"></i></a>
+                </div>
+                <!-- small box -->
+                <div class="small-box bg-red">
+                    <div class="inner">
+                        <h3>65</h3>
+
+                        <p>New Visitors</p>
+                    </div>
+                    <div class="icon">
+                        <i class="fa fa-pie-chart"></i>
+                    </div>
+                    <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-right"></i></a>
+                </div>
+            </div>
+
+            <!-- right col (We are only adding the ID to make the widgets sortable)-->
+            <div class="col-xl-6">
+                <!-- Map box -->
+                <div class="box">
+                    <div class="box-header">
+                        <!-- tools box -->
+                        <div class="pull-right box-tools">
+                            <button type="button" class="btn btn-white btn-sm daterange pull-right" data-toggle="tooltip"
+                                    title="Date range">
+                                <i class="fa fa-calendar"></i></button>
+                            <button type="button" class="btn btn-white btn-sm pull-right" data-widget="collapse"
+                                    data-toggle="tooltip" title="Collapse" style="margin-right: 5px;">
+                                <i class="fa fa-minus"></i></button>
+                        </div>
+                        <!-- /. tools -->
+
+                        <i class="fa fa-map-marker"></i>
+
+                        <h3 class="box-title">
+                            Visitors
+                        </h3>
+                    </div>
+                    <div class="box-body">
+                        <div id="world-map" style="height: 250px; width: 100%;"></div>
+                    </div>
+                    <!-- /.box-body-->
+                    <div class="box-footer">
+                        <div class="row">
+                            <div class="col text-center" style="border-right: 1px solid #f4f4f4">
+                                <div id="sparkline-1"></div>
+                                <div class="knob-label">Visitors</div>
+                            </div>
+                            <!-- ./col -->
+                            <div class="col text-center" style="border-right: 1px solid #f4f4f4">
+                                <div id="sparkline-2"></div>
+                                <div class="knob-label">Online</div>
+                            </div>
+                            <!-- ./col -->
+                            <div class="col text-center">
+                                <div id="sparkline-3"></div>
+                                <div class="knob-label">Exists</div>
+                            </div>
+                            <!-- ./col -->
+                        </div>
+                        <!-- /.row -->
+                    </div>
+                </div>
+                <!-- /.box -->
+            </div>
+            <div class="col-xl-6">
+
+                <!-- quick email widget -->
+                <div class="box box-info">
+                    <div class="box-header">
+                        <i class="fa fa-envelope"></i>
+
+                        <h3 class="box-title">Quick Email</h3>
+                        <!-- tools box -->
+                        <div class="pull-right box-tools">
+                            <button type="button" class="btn btn-danger btn-sm" data-widget="remove" data-toggle="tooltip"
+                                    title="Remove">
+                                <i class="fa fa-times"></i></button>
+                        </div>
+                        <!-- /. tools -->
+                    </div>
+                    <div class="box-body">
+                        <form action="#" method="post">
+                            <div class="form-group">
+                                <input type="email" class="form-control" name="emailto" placeholder="Email to:">
+                            </div>
+                            <div class="form-group">
+                                <input type="text" class="form-control" name="subject" placeholder="Subject">
+                            </div>
+                            <div>
+                                <textarea class="textarea" placeholder="Message" style="width: 100%; height: 125px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"></textarea>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="box-footer clearfix">
+                        <button type="button" class="pull-right btn btn-blue" id="sendEmail"> Send <i class="fa fa-paper-plane-o"></i></button>
+                    </div>
+                </div>
+                <!-- /.box -->
+
+            </div>
+            <!-- right col -->
+        </div>
+        <!-- /.row (main row) -->
+
+    </section>
+{% endblock %}

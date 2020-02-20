@@ -5,128 +5,124 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <title>{% block title %}SYCOP ::{% endblock %}</title>
         {% block stylesheets %}
-            <link rel="stylesheet" href="{{ asset('assets/vendors/mdi/css/materialdesignicons.min.css') }}">
-            <link rel="stylesheet" href="{{ asset('assets/vendors/simple-line-icons/css/simple-line-icons.css') }}">
-            <link rel="stylesheet" href="{{ asset('assets/vendors/flag-icon-css/css/flag-icon.min.css') }}">
-            <link rel="stylesheet" href="{{ asset('assets/vendors/css/vendor.bundle.base.css') }}">
-            <link rel="stylesheet" href="{{ asset('assets/vendors/font-awesome/css/font-awesome.min.css') }}">
-            <link rel="stylesheet" href="{{ asset('assets/vendors/jquery-bar-rating/fontawesome-stars.css') }}">
-            <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
+            <link rel="stylesheet" href="{{ absolute_url(asset('ressources/assets/vendor_components/bootstrap/dist/css/bootstrap.css')) }}">
+            <link rel="stylesheet" href="{{ asset('ressources/css/font-awesome.min.css') }}">
+            <link rel="stylesheet" href="{{ asset('ressources/css/master_style.css') }}">
+            <link rel="stylesheet" href="{{ asset('ressources/css/skins/_all-skins.css') }}">
         {% endblock %}
         <link rel="shortcut icon" href="{{ asset('favicon.ico') }}">
     </head>
-    <body>
-        <div class="container-scroller">
-            <nav class="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
-                <div class="text-center navbar-brand-wrapper d-flex align-items-top justify-content-center">
-                  <!--  <a class="navbar-brand brand-logo" href="{{ path('homepage') }}"><img src="{{ asset('assets/images/logo.png') }}" alt="logo"/></a>
-                    <a class="navbar-brand brand-logo-mini" href="{{ path('homepage') }}"><img src="{{ asset('assets/images/logo.png') }}" alt="logo"/></a>
-                --></div>
-                <div class="navbar-menu-wrapper d-flex align-items-center">
-                    <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-toggle="minimize">
-                        <span class="icon-menu"></span>
-                    </button>
-                    <ul class="navbar-nav navbar-nav-right">
-                        <li class="nav-item dropdown">
-                            <a class="nav-link count-indicator dropdown-toggle" id="messageDropdown" href="#" data-toggle="dropdown" aria-expanded="false">
-                                <i class="icon-user mx-0"></i>
-                                <span class="count"></span>
-                            </a>
-                            <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list" aria-labelledby="messageDropdown">
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item preview-item">
-                                    <div class="preview-item-content flex-grow">
-                                        <p class="font-weight-light small-text">Modifier le mot de passe</p>
-                                    </div>
+    <body class="hold-transition skin-blue sidebar-mini">
+        <div class="wrapper">
+            <header class="main-header">
+                <a href="{{ path('homepage') }}" class="logo">
+                    <span class="logo-mini">SYCOP</span>
+                    <span class="logo-lg"><b>SYCOP</b></span>
+                </a>
+                <nav class="navbar navbar-static-top">
+                    <a href="{{ path('homepage') }}" class="sidebar-toggle" data-toggle="push-menu" role="button">
+                        <span class="sr-only">Toggle navigation</span>
+                    </a>
+                    <div class="navbar-custom-menu">
+                        <ul class="nav navbar-nav">
+                            <li class="dropdown user user-menu">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                    <img src="{{ asset('ressources/images/avatar.png') }}" class="user-image rounded-circle" alt="Avatar">
                                 </a>
-                                <div class="dropdown-divider"></div>
-                                <div class="dropdown-divider"></div>
-                                <a href="{{ path('app_logout') }}" class="dropdown-item preview-item">
-                                    <div class="preview-item-content flex-grow">
-                                        <p class="font-weight-light small-text">Deconnexion</p>
-                                    </div>
-                                </a>
-                            </div>
-                        </li>
-                    </ul>
-                    <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button" data-toggle="offcanvas">
-                        <span class="icon-menu"></span>
-                    </button>
-                </div>
-            </nav>
-            <div class="container-fluid page-body-wrapper">
-                <div class="row row-offcanvas row-offcanvas-right">
-                    <nav class="sidebar sidebar-offcanvas" id="sidebar">
-                        <ul class="nav">
-                            <li class="nav-item nav-profile">
-                                <div class="nav-link">
-                                    <div class="profile-image">
-                                        <img src="{{ asset('assets/images/logo.png') }}" alt="image"/>
-                                        <span class="online-status online"></span>
-                                    </div>
-                                </div>
+                                <ul class="dropdown-menu scale-up">
+                                    <li class="user-body">
+                                        <div class="row no-gutters">
+                                            <div class="col-12 text-left">
+                                                <a href="#"><i class="ion ion-person"></i> Mot de passe</a>
+                                            </div>
+                                            <div role="separator" class="divider col-12"></div>
+                                            <div class="col-12 text-left">
+                                                <a href="{{ path('app_logout') }}"><i class="fa fa-power-off"></i> Deconnexion</a>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="index.html">
-                                    <i class="icon-rocket menu-icon"></i>
-                                    <span class="menu-title">Tableau de bord</span>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="#">
-                                    <i class="icon-shield menu-icon"></i>
-                                    <span class="menu-title">Activités</span>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" data-toggle="collapse" href="#page-layouts" aria-expanded="false" aria-controls="page-layouts">
-                                    <i class="fa fa-users menu-icon"></i>
-                                    <span class="menu-title">Utilisateurs</span>
-                                </a>
-                                <div class="collapse" id="page-layouts">
-                                    <ul class="nav flex-column sub-menu">
-                                        <li class="nav-item d-none d-lg-block"> <a class="nav-link" href="#">Utilisateur</a></li>
-                                        <li class="nav-item"> <a class="nav-link" href="#">GEstionnaire</a></li>
-                                    </ul>
-                                </div>
-                            </li>
-                            <li class="nav-item d-none d-lg-block">
-                                <a class="nav-link" data-toggle="collapse" href="#sidebar-layouts" aria-expanded="false" aria-controls="sidebar-layouts">
-                                    <i class="fa fa-cog menu-icon"></i>
-                                    <span class="menu-title">Parametres</span>
-                                </a>
-                                <div class="collapse" id="sidebar-layouts">
-                                    <ul class="nav flex-column sub-menu">
-                                        <li class="nav-item"> <a class="nav-link" href="{{ path('region_index') }}">Regions</a></li>
-                                        <li class="nav-item"> <a class="nav-link" href="#">Icon menu</a></li>
-                                        <li class="nav-item"> <a class="nav-link" href="#">Sidebar Hidden</a></li>
-                                        <li class="nav-item"> <a class="nav-link" href="#">Sidebar Overlay</a></li>
-                                        <li class="nav-item"> <a class="nav-link" href="#">Sidebar Fixed</a></li>
-                                    </ul>
-                                </div>
+
+                            <li>
+                                <a href="#" data-toggle="control-sidebar"><i class="fa fa-cog fa-spin"></i></a>
                             </li>
                         </ul>
-                    </nav>
-                    <div class="content-wrapper">
-                        {% block body %}{% endblock %}
-                        <footer class="footer">
-                            <div class="container-fluid clearfix">
-                                <span class="text-muted d-block text-center text-sm-left d-sm-inline-block">Copyright © 2020 <a href="https://www.scoutascci.org" target="_blank">Association des Scouts Catholiques de Cote d'Ivoire</a>. Tous droits réservés.</span>
-                                <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center">By <a href="mailto:dieudonne@scoutasci.org">Projet et Innovation Technologique</a> </span>
-                            </div>
-                        </footer>
                     </div>
+                </nav>
+            </header>
+            <aside class="main-sidebar">
+                <section class="sidebar">
+                    <div class="user-panel">
+                        <div class="image">
+                            <img src="{{ asset('ressources/images/logo.png') }}" class="rounded-circle" alt="User Image">
+                        </div>
+                    </div>
+                    <ul class="sidebar-menu" data-widget="tree">
+                        <li {% if current_menu is defined and current_menu == 'Accueil'  %} class="active"{% endif %}>
+                            <a href="{{ path('homepage') }}">
+                                <i class="fa fa-dashboard"></i> <span>Tableau de bord</span>
+                                <span class="pull-right-container">
+                                  <i class="fa fa-angle-left pull-right"></i>
+                                </span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#"><i class="fa fa-calendar"></i> <span>Activités</span></a>
+                        </li>
+                        <li {% if current_menu is defined and current_menu == 'Parametre'  %} class="treeview active" {% else %} class="treeview"{% endif %}>
+                            <a href="#">
+                                <i class="fa fa-cog"></i>
+                                <span>Paramètres</span>
+                                <span class="pull-right-container">
+                                  <i class="fa fa-angle-left pull-right"></i>
+                                </span>
+                            </a>
+                            <ul class="treeview-menu">
+                                <li><a href="{{ path('region_index') }}"><i class="fa fa-circle-o"></i> Régions</a></li>
+                                <li><a href="{{ path('district_index') }}"><i class="fa fa-circle-o"></i> Districts</a></li>
+                            </ul>
+                        </li>
+                        <li class="treeview">
+                            <a href="#">
+                                <i class="fa fa-lock"></i>
+                                <span>Securité</span>
+                                <span class="pull-right-container">
+                                  <i class="fa fa-angle-left pull-right"></i>
+                                </span>
+                            </a>
+                            <ul class="treeview-menu">
+                                <li><a href="#"><i class="fa fa-circle-o"></i> Utilisateur</a></li>
+                                <li><a href="#"><i class="fa fa-circle-o"></i> Gestionnaire</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </section>
+                <div class="sidebar-footer">
+                    <a href="#" class="link" data-toggle="tooltip" title="" data-original-title="Settings"><i class="fa fa-cog fa-spin"></i></a>
+                    <a href="#" class="link" data-toggle="tooltip" title="" data-original-title="Email"><i class="fa fa-envelope"></i></a>
+                    <a href="#" class="link" data-toggle="tooltip" title="" data-original-title="Logout"><i class="fa fa-power-off"></i></a>
                 </div>
+            </aside>
+            <div class="content-wrapper">
+                {% block body %}{% endblock %}
             </div>
+            <footer class="main-footer">
+                <div class="pull-right d-none d-sm-inline-block">
+                    <b>Version</b> 1.0 &nbsp;
+                </div>Copyright &copy; 2020 <a href="https://www.scoutascci.org/">Association des Scouts Catholiques de Cote d'Ivoire</a>. Tous droits reservés.
+            </footer>
+            <div class="control-sidebar-bg"></div>
         </div>
 
         {% block javascripts %}
-            <script src="{{ asset('assets/vendors/js/vendor.bundle.base.js') }}"></script>
-            <script src="{{ asset('assets/js/off-canvas.js') }}"></script>
-            <script src="{{ asset('assets/js/hoverable-collapse.js') }}"></script>
-            <script src="{{ asset('assets/js/misc.js') }}"></script>
-            <script src="{{ asset('assets/js/settings.js') }}"></script>
-            <script src="{{ asset('assets/js/todolist.js') }}"></script>
+            <script src="{{ asset('ressources/assets/vendor_components/jquery/dist/jquery.min.js') }}"></script>
+            <script src="{{ asset('ressources/assets/vendor_components/popper/dist/popper.min.js') }}"></script>
+            <script src="{{ asset('ressources/assets/vendor_components/bootstrap/dist/js/bootstrap.min.js') }}"></script>
+            <script src="{{ asset('ressources/assets/vendor_components/jquery-slimscroll/jquery.slimscroll.min.js') }}"></script>
+            <script src="{{ asset('ressources/assets/vendor_components/fastclick/lib/fastclick.js') }}"></script>
+            <script src="{{ asset('ressources/js/template.js') }}"></script>
+            <script src="{{ asset('ressources/js/demo.js') }}"></script>
         {% endblock %}
     </body>
 </html>
