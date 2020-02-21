@@ -1,0 +1,8 @@
+<form method="post" action="{{ path('participant_delete', {'id': participant.id}) }}" onsubmit="return confirm('Voulez-vous vraiment supprimer ce participant?');">
+    <input type="hidden" name="_method" value="DELETE">
+    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ participant.id) }}">
+    <div class="text-left">
+        <button class="btn btn-danger btn-rounded">{{'form.btnDelete'|trans}}</button>
+    </div>
+
+</form>
