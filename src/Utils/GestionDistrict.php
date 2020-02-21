@@ -27,6 +27,8 @@ class GestionDistrict
     }
 
     /**
+     * Incrementation du nombre utilisateur affecté au district
+     *
      * @param $districtID
      * @return bool
      */

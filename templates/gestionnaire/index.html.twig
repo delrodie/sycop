@@ -41,6 +41,7 @@
                                             <th class="text-center">Id</th>
                                             <th class="text-center">Login</th>
                                             <th class="text-center">District</th>
+                                            <th class="text-center">Cle</th>
                                             <th class="text-center">actions</th>
                                         </tr>
                                         </thead>
@@ -50,6 +51,7 @@
                                                 <td>{{ loop.index }}</td>
                                                 <td>{{ gestionnaire.user.username }}</td>
                                                 <td>{{ gestionnaire.district.nom }}</td>
+                                                <td>{{ gestionnaire.cle }}</td>
                                                 <td class="text-center">
                                                     <a href="{{ path('gestionnaire_show', {'id': gestionnaire.id}) }}"><i class="fa fa-eye"></i></a> |
                                                     <a href="{{ path('gestionnaire_edit', {'id': gestionnaire.id}) }}"><i class="fa fa-edit"></i></a>

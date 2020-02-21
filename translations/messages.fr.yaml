@@ -11,6 +11,7 @@ form:
   btnCancel : Annuler
   btnUpdate : Modifier
   btnDelete: Supprimer
+  btnGenerate : Generer
 
 region:
   confirmDelete : Voulez-vous vraiment supprimer cette region?

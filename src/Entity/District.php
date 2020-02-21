@@ -49,6 +49,11 @@ class District
      */
     private $gestionnaires;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $code;
+
     public function __construct()
     {
         $this->gestionnaires = new ArrayCollection();
@@ -146,6 +151,18 @@ class District
                 $gestionnaire->setDistrict(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getCode(): ?string
+    {
+        return $this->code;
+    }
+
+    public function setCode(?string $code): self
+    {
+        $this->code = $code;
 
         return $this;
     }

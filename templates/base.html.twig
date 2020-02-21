@@ -85,7 +85,7 @@
                                 <li><a href="{{ path('departement_index') }}"><i class="fa fa-circle-o"></i> Departement</a></li>
                             </ul>
                         </li>
-                            <li class="treeview">
+                            <li {% if current_menu is defined and current_menu == 'Security'  %} class="treeview active" {% else %} class="treeview"{% endif %}>
                                 <a href="#">
                                     <i class="fa fa-lock"></i>
                                     <span>Securité</span>
@@ -96,6 +96,9 @@
                                 <ul class="treeview-menu">
                                     <li><a href="{{ path('user_index') }}"><i class="fa fa-circle-o"></i> Utilisateur</a></li>
                                     <li><a href="{{ path('gestionnaire_index') }}"><i class="fa fa-circle-o"></i> Gestionnaire</a></li>
+                                    {% if is_granted('ROLE_SUPER_ADMIN') %}
+                                        <li><a href="{{ path('gestionnaire_new') }}"><i class="fa fa-circle-o"></i>District User</a></li>
+                                    {% endif %}
                                 </ul>
                             </li>
                         {% endif %}

@@ -36,6 +36,11 @@ class Gestionnaire
      */
     private $district;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $cle;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -85,6 +90,18 @@ class Gestionnaire
     public function setDistrict(?District $district): self
     {
         $this->district = $district;
+
+        return $this;
+    }
+
+    public function getCle(): ?string
+    {
+        return $this->cle;
+    }
+
+    public function setCle(?string $cle): self
+    {
+        $this->cle = $cle;
 
         return $this;
     }

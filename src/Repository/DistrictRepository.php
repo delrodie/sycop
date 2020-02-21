@@ -19,11 +19,25 @@ class DistrictRepository extends ServiceEntityRepository
         parent::__construct($registry, District::class);
     }
 
+    /**
+     * Liste sans les districts
+     *
+     * @return \Doctrine\ORM\QueryBuilder
+     */
     public function getListWithoutDistrict()
     {
         return $this->createQueryBuilder('d')
             ->where('d.nom LIKE :district')
             ->setParameter('district', 'Equipe%')
+            ;
+    }
+    public function findByRegionWithoutUser($regionID)
+    {
+        return $this->createQueryBuilder('d')
+            ->where('d.region = :id')
+            ->andWhere('d.user IS NULL')
+            ->setParameter('id', $regionID)
+            ->getQuery()->getResult()
             ;
     }
 

@@ -13,7 +13,7 @@ class RegionType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('nom', TextType::class,['attr'=>['class'=>'form-control', 'placeholder'=>"Nom de la region", 'autocomplete'=>"off"]])
+            ->add('nom', TextType::class,['attr'=>['class'=>'form-control', 'placeholder'=>"Nom de la region", 'autocomplete'=>"off", 'tabindex'=>1]])
             //->add('couleur', TextType::class,['attr'=>['class'=>'form-control']])
             //->add('nombreDistrict')
         ;

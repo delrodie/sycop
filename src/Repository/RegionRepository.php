@@ -27,6 +27,19 @@ class RegionRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('r')->orderBy('r.nom');
     }
 
+    /**
+     * @return mixed
+     */
+    public function findDiocese()
+    {
+        return $this->createQueryBuilder('r')
+            ->where('r.slug <> :nation')
+            ->orderBy('r.nom','ASC')
+            ->setParameter('nation', 'equipe-nationale')
+            ->getQuery()->getResult()
+            ;
+    }
+
     // /**
     //  * @return Region[] Returns an array of Region objects
     //  */

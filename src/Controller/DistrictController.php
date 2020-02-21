@@ -5,7 +5,9 @@ namespace App\Controller;
 use App\Entity\District;
 use App\Form\DistrictType;
 use App\Repository\DistrictRepository;
+use App\Repository\RegionRepository;
 use App\Utils\GestionDistrict;
+use App\Utils\GestionRegion;
 use Cocur\Slugify\Slugify;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -20,7 +22,7 @@ class DistrictController extends AbstractController
     /**
      * @Route("/", name="district_index", methods={"GET","POST"})
      */
-    public function index(Request $request, DistrictRepository $districtRepository, GestionDistrict $gestionDistrict): Response
+    public function index(Request $request, DistrictRepository $districtRepository, GestionDistrict $gestionDistrict, GestionRegion $gestionRegion): Response
     {
         $this->denyAccessUnlessGranted('ROLE_DISTRICT', "Il faudrait avoir un acces au moins de region");
         $district = new District();
@@ -35,7 +37,11 @@ class DistrictController extends AbstractController
                 $this->addFlash('danger', "Echec: ".$district->getNom()." existe déjà! Veuillez enregistrer une autre");
                 return $this->redirectToRoute('region_index');
             }
+            // Recuperation du code du district
+            $code = $gestionRegion->addNombreDistrict($district->getRegion());
+
             $district->setSlug($slug);
+            $district->setCode($code);
             $entityManager->persist($district);
             $entityManager->flush();
 

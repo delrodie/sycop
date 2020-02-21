@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Gestionnaire;
 use App\Form\GestionnaireType;
 use App\Repository\GestionnaireRepository;
+use App\Repository\RegionRepository;
 use App\Utils\GestionDistrict;
 use App\Utils\GestionUtilisateur;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -65,14 +66,21 @@ class GestionnaireController extends AbstractController
             'gestionnaires' => $gestionnaireRepository->findAll(),
             'gestionnaire' => $gestionnaire,
             'form' => $form->createView(),
+            'current_menu' => 'Security'
         ]);
     }
 
     /**
      * @Route("/new", name="gestionnaire_new", methods={"GET","POST"})
      */
-    public function new(Request $request): Response
+    public function new(Request $request, GestionnaireRepository $gestionnaireRepository, GestionUtilisateur $gestionUtilisateur, RegionRepository $regionRepository): Response
     {
+        $region = $request->get('region');
+        if ($region){
+            $gestionUtilisateur->createUser($region);
+            $this->addFlash('success', "Les utilisateurs des districts de la région ".$regionRepository->findOneBy(['id'=>$region])->getNom()." ont été générés avec succès!");
+        }
+        //
         $gestionnaire = new Gestionnaire();
         $form = $this->createForm(GestionnaireType::class, $gestionnaire);
         $form->handleRequest($request);
@@ -88,6 +96,8 @@ class GestionnaireController extends AbstractController
         return $this->render('gestionnaire/new.html.twig', [
             'gestionnaire' => $gestionnaire,
             'form' => $form->createView(),
+            'gestionnaires' => $gestionnaireRepository->findAll(),
+            'regions' => $regionRepository->findDiocese(),
         ]);
     }
 
@@ -128,6 +138,7 @@ class GestionnaireController extends AbstractController
             'gestionnaires' => $gestionnaireRepository->findAll(),
             'gestionnaire' => $gestionnaire,
             'form' => $form->createView(),
+            'current_menu' => 'Security'
         ]);
     }
 
