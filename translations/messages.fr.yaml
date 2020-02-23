@@ -27,3 +27,16 @@ departement:
 gestionnaire:
   username: Compte utilisateur
   district: District
+
+activite:
+  labelTitre: Titre
+  labelDescription: Description
+  labelObjectif: Objectif
+  labelResultat : Resulat Attendu
+  labelDebut: Debut période
+  labelFin: Fin Période
+  labelLieu: Lieu
+  labelRMO: RMO
+  labelDistrict: District
+  labelParticipant: Cible
+  labelDepatement : Departements

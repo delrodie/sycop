@@ -54,9 +54,15 @@ class District
      */
     private $code;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Activite", mappedBy="district")
+     */
+    private $activites;
+
     public function __construct()
     {
         $this->gestionnaires = new ArrayCollection();
+        $this->activites = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -163,6 +169,37 @@ class District
     public function setCode(?string $code): self
     {
         $this->code = $code;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Activite[]
+     */
+    public function getActivites(): Collection
+    {
+        return $this->activites;
+    }
+
+    public function addActivite(Activite $activite): self
+    {
+        if (!$this->activites->contains($activite)) {
+            $this->activites[] = $activite;
+            $activite->setDistrict($this);
+        }
+
+        return $this;
+    }
+
+    public function removeActivite(Activite $activite): self
+    {
+        if ($this->activites->contains($activite)) {
+            $this->activites->removeElement($activite);
+            // set the owning side to null (unless already changed)
+            if ($activite->getDistrict() === $this) {
+                $activite->setDistrict(null);
+            }
+        }
 
         return $this;
     }

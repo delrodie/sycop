@@ -125,7 +125,7 @@ class GestionUtilisateur
             $user->setUsername($username);
             $user->setEmail($mail);
             $user->setPassword($this->passwordEncoder->encodePassword($user, $password));
-            $user->setRoles(['ROLE_DISTRICT']);
+            $user->setRoles(['ROLE_USER','ROLE_DISTRICT']);
             $this->em->persist($user);
             $this->em->flush();
 

@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Edit Region{% endblock %}
+{% block title %}{{ parent()}} Gestion des regions{% endblock %}
 
 {% block body %}
     <div class="row">
@@ -53,7 +53,7 @@
         <div class="col-sm-6 col-md-4 grid-margin stretch-card">
             <div class="card">
                 <div class="card-body">
-                    <h4 class="card-title">Enregistrement</h4>
+                    <h4 class="card-title">Modification</h4>
                     {{ include('region/_form.html.twig', {'button_label': 'form.btnUpdate'|trans}) }}
                     <div class="row">
                         <div class="col-12 text-right">

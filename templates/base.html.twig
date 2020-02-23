@@ -68,7 +68,7 @@
                             </a>
                         </li>
                         <li>
-                            <a href="#"><i class="fa fa-calendar"></i> <span>Activités</span></a>
+                            <a href="{{ path('activite_index') }}"><i class="fa fa-calendar"></i> <span>Activités</span></a>
                         </li>
                         {% if is_granted('ROLE_ADMIN') %}
                         <li {% if current_menu is defined and current_menu == 'Parametre'  %} class="treeview active" {% else %} class="treeview"{% endif %}>

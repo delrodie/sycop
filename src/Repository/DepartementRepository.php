@@ -19,6 +19,11 @@ class DepartementRepository extends ServiceEntityRepository
         parent::__construct($registry, Departement::class);
     }
 
+    public function liste()
+    {
+        $this->createQueryBuilder('d')->orderBy('d.libelle','ASC');
+    }
+
     // /**
     //  * @return Departement[] Returns an array of Departement objects
     //  */

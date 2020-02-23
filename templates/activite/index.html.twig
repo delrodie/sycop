@@ -1,0 +1,120 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{parent()}} Gestion des activités{% endblock %}
+
+{% block body %}
+    <section class="content-header">
+        <h1>
+            Gestion des activités
+            <small></small>
+        </h1>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ path('homepage') }}"><i class="fa fa-dashboard"></i> Accueil</a></li>
+            <li class="breadcrumb-item"> Activité</li>
+            <li class="breadcrumb-item active">Listes</li>
+        </ol>
+    </section>
+
+    <section class="content">
+        <div class="row mt-5 mb-5">
+            <div class="col text-right"><a href="{{ path('activite_new') }}" class="btn btn-success">Ajouter une nouvelle activité</a></div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12 col-md-12 grid-margin stretch-card"   >
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title">Liste des activités</h4>
+                        {% for label, messages in app.flashes(['success','danger']) %}
+                            {% for message in messages %}
+                                <div class="alert alert-{{label}} alert-dismissible fade show" role="alert">
+                                    {{ message }}
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                            {% endfor %}
+                        {% endfor %}
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="table-responsive">
+                                    <table id="example" class="table table-bordered table-hover display nowrap margin-top-10 table-responsive" cellspacing="0" width="100%">
+
+                                        <thead>
+                                        <tr class="text-center">
+                                            <th class="text-center">Id</th>
+                                            <th class="text-center">Periode</th>
+                                            <th class="text-center">Region</th>
+                                            <th class="text-center">District</th>
+                                            <th class="text-center">Titre</th>
+                                            <th class="text-center">Desription</th>
+                                            <th class="text-center">lieu</th>
+                                            <th class="text-center">RMO</th>
+                                            <th class="text-center">Departement</th>
+                                            <th class="text-center">Cibles</th>
+                                            <th class="text-center">Statut</th>
+                                            <th class="text-center">actions</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        {% for activite in activites %}
+                                            <tr>
+                                                <td>{{ loop.index }}</td>
+                                                <td>{{ activite.dateDebut|date('d-m-Y') }}&nbsp; ~ &nbsp;{{ activite.dateFin|date('d-m-Y') }}</td>
+                                                <td>{{ activite.district.region.nom }}</td>
+                                                <td>{{ activite.district.nom }}</td>
+                                                <td>
+
+                                                    {{ activite.titre}}
+                                                </td>
+                                                <td>{{ activite.description|raw}}</td>
+                                                <td>{{ activite.lieu}}</td>
+                                                <td>{{ activite.rmo}}</td>
+                                                <td>
+                                                    {% for departement in activite.departement %}
+                                                        {{ departement.libelle }} -
+                                                    {% endfor %}
+                                                </td>
+                                                <td>
+                                                    {% for participant in activite.participant %}
+                                                        {{participant.libelle}} -
+                                                    {% endfor %}
+                                                </td>
+                                                <td class="text-center">
+                                                    {% if activite.statut %}
+                                                        <span class="badge badge-success">Validée</span>
+                                                    {% else %}
+                                                        <span class="badge badge-danger">Non validée</span>
+                                                    {% endif %}
+                                                </td>
+                                                <td class="text-center">
+                                                    <a href="{{ path('activite_show', {'slug': activite.slug}) }}"><i class="fa fa-eye"></i></a> |
+                                                    <a href="{{ path('activite_edit', {'slug': activite.slug}) }}"><i class="fa fa-edit"></i></a> |
+                                                    <a href="{{ path('activite_edit', {'slug': activite.slug}) }}"><i class="fa fa-file"></i></a>
+                                                </td>
+                                            </tr>
+                                        {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('ressources/assets/vendor_components/datatables.net/js/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ asset('ressources/assets/vendor_components/datatables.net-bs/js/dataTables.bootstrap.min.js') }}"></script>
+    <script src="{{ asset('ressources/assets/vendor_plugins/DataTables-1.10.15/media/js/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ asset('ressources/assets/vendor_plugins/DataTables-1.10.15/extensions/Buttons/js/dataTables.buttons.min.js') }}"></script>
+    <script src="{{ asset('ressources/assets/vendor_plugins/DataTables-1.10.15/extensions/Buttons/js/buttons.flash.min.js') }}"></script>
+    <script src="{{ asset('ressources/assets/vendor_plugins/DataTables-1.10.15/ex-js/jszip.min.js') }}"></script>
+    <script src="{{ asset('ressources/assets/vendor_plugins/DataTables-1.10.15/ex-js/pdfmake.min.js') }}"></script>
+    <script src="{{ asset('ressources/assets/vendor_plugins/DataTables-1.10.15/ex-js/vfs_fonts.js') }}"></script>
+    <script src="{{ asset('ressources/assets/vendor_plugins/DataTables-1.10.15/extensions/Buttons/js/buttons.html5.min.js') }}"></script>
+    <script src="{{ asset('ressources/assets/vendor_plugins/DataTables-1.10.15/extensions/Buttons/js/buttons.print.min.js') }}"></script>
+    <script src="{{ asset('ressources/js/pages/data-table.js') }}"></script>
+{% endblock %}

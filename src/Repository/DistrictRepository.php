@@ -31,6 +31,11 @@ class DistrictRepository extends ServiceEntityRepository
             ->setParameter('district', 'Equipe%')
             ;
     }
+
+    /**
+     * @param $regionID
+     * @return mixed
+     */
     public function findByRegionWithoutUser($regionID)
     {
         return $this->createQueryBuilder('d')
@@ -39,6 +44,14 @@ class DistrictRepository extends ServiceEntityRepository
             ->setParameter('id', $regionID)
             ->getQuery()->getResult()
             ;
+    }
+
+    /**
+     * @return \Doctrine\ORM\QueryBuilder
+     */
+    public function liste()
+    {
+        return $this->createQueryBuilder('d')->orderBy('d.nom', 'ASC');
     }
 
     // /**
