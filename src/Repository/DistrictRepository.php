@@ -54,6 +54,11 @@ class DistrictRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('d')->orderBy('d.nom', 'ASC');
     }
 
+    public function findDistrict($district)
+    {
+        return $this->createQueryBuilder('d')->where('d.id = :district')->setParameter('district', $district);
+    }
+
     // /**
     //  * @return District[] Returns an array of District objects
     //  */

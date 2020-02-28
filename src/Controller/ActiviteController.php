@@ -22,6 +22,13 @@ class ActiviteController extends AbstractController
      */
     public function index(ActiviteRepository $activiteRepository): Response
     {
+        // Recuperation de l'user
+        $user = $this->getUser();
+        // Affectation selon le role de l'utilisateur
+        //if ($user->getRoles()[1] === 'ROLE_REGION') die("C'est une regional");
+        //if($user->getRoles()[1] === 'ROLE_DISTRICT')die("C'est un commissaire de district");
+        if ($user->getRoles()[1] == 'ROLE_NATIONAL') return $this->redirectToRoute('nationale_index');
+
         return $this->render('activite/index.html.twig', [
             'activites' => $activiteRepository->findAll(),
         ]);
@@ -37,7 +44,7 @@ class ActiviteController extends AbstractController
         // Affectation selon le role de l'utilisateur
         if ($user->getRoles()[1] === 'ROLE_REGION') die("C'est une regional");
         if($user->getRoles()[1] === 'ROLE_DISTRICT')die("C'est un commissaire de district");
-        if ($user->getRoles()[1] === 'ROLE_NATIONAL') die("Cest un national");
+        if ($user->getRoles()[1] === 'ROLE_NATIONAL') return $this->redirectToRoute('nationale_new');
 
         $activite = new Activite();
         $form = $this->createForm(ActiviteType::class, $activite);
