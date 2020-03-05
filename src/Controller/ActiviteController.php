@@ -25,7 +25,7 @@ class ActiviteController extends AbstractController
         // Recuperation de l'user
         $user = $this->getUser();
         // Affectation selon le role de l'utilisateur
-        //if ($user->getRoles()[1] === 'ROLE_REGION') die("C'est une regional");
+        if ($user->getRoles()[1] === 'ROLE_REGION') return  $this->redirectToRoute("regionale_index");
         //if($user->getRoles()[1] === 'ROLE_DISTRICT')die("C'est un commissaire de district");
         if ($user->getRoles()[1] == 'ROLE_NATIONAL') return $this->redirectToRoute('nationale_index');
 
@@ -42,7 +42,7 @@ class ActiviteController extends AbstractController
         // Recuperation de l'user
         $user = $this->getUser();
         // Affectation selon le role de l'utilisateur
-        if ($user->getRoles()[1] === 'ROLE_REGION') die("C'est une regional");
+        if ($user->getRoles()[1] === 'ROLE_REGION') return $this->redirectToRoute('regionale_new');
         if($user->getRoles()[1] === 'ROLE_DISTRICT')die("C'est un commissaire de district");
         if ($user->getRoles()[1] === 'ROLE_NATIONAL') return $this->redirectToRoute('nationale_new');
 
@@ -100,6 +100,13 @@ class ActiviteController extends AbstractController
      */
     public function edit(Request $request, Activite $activite, GestionActivite $gestionActivite): Response
     {
+        // Recuperation de l'user
+        $user = $this->getUser();
+        // Affectation selon le role de l'utilisateur
+        if ($user->getRoles()[1] === 'ROLE_REGION') return $this->redirectToRoute('regionale_edit',['slug'=>$activite->getSlug()]);
+        if($user->getRoles()[1] === 'ROLE_DISTRICT')die("C'est un commissaire de district");
+        if ($user->getRoles()[1] === 'ROLE_NATIONAL') return $this->redirectToRoute('nationale_edit',['slug'=>$activite->getSlug()]);
+
         $form = $this->createForm(ActiviteType::class, $activite);
         $form->handleRequest($request);
 

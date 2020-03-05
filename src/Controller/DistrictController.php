@@ -24,7 +24,7 @@ class DistrictController extends AbstractController
      */
     public function index(Request $request, DistrictRepository $districtRepository, GestionDistrict $gestionDistrict, GestionRegion $gestionRegion): Response
     {
-        $this->denyAccessUnlessGranted('ROLE_DISTRICT', "Il faudrait avoir un acces au moins de region");
+        $this->denyAccessUnlessGranted('ROLE_ADMIN', "Il faudrait avoir un acces au moins de region");
         $district = new District();
         $form = $this->createForm(DistrictType::class, $district);
         $form->handleRequest($request);

@@ -59,6 +59,19 @@ class DistrictRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('d')->where('d.id = :district')->setParameter('district', $district);
     }
 
+    /**
+     * @param $region
+     * @return \Doctrine\ORM\QueryBuilder
+     */
+    public function findListByRegion($region)
+    {
+        return $this->createQueryBuilder('d')
+            ->join('d.region', 'r')
+            ->where('r.id = :region')
+            ->setParameter('region', $region)
+            ;
+    }
+
     // /**
     //  * @return District[] Returns an array of District objects
     //  */
