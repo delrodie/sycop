@@ -26,11 +26,11 @@ class ActiviteController extends AbstractController
         $user = $this->getUser();
         // Affectation selon le role de l'utilisateur
         if ($user->getRoles()[1] === 'ROLE_REGION') return  $this->redirectToRoute("regionale_index");
-        //if($user->getRoles()[1] === 'ROLE_DISTRICT')die("C'est un commissaire de district");
+        if($user->getRoles()[1] === 'ROLE_DISTRICT') return $this->redirectToRoute("districtal_index");
         if ($user->getRoles()[1] == 'ROLE_NATIONAL') return $this->redirectToRoute('nationale_index');
 
         return $this->render('activite/index.html.twig', [
-            'activites' => $activiteRepository->findAll(),
+            'activites' => $activiteRepository->findGlobal(),
         ]);
     }
 
@@ -43,7 +43,7 @@ class ActiviteController extends AbstractController
         $user = $this->getUser();
         // Affectation selon le role de l'utilisateur
         if ($user->getRoles()[1] === 'ROLE_REGION') return $this->redirectToRoute('regionale_new');
-        if($user->getRoles()[1] === 'ROLE_DISTRICT')die("C'est un commissaire de district");
+        if($user->getRoles()[1] === 'ROLE_DISTRICT') return $this->redirectToRoute('districtal_new');
         if ($user->getRoles()[1] === 'ROLE_NATIONAL') return $this->redirectToRoute('nationale_new');
 
         $activite = new Activite();
@@ -103,9 +103,9 @@ class ActiviteController extends AbstractController
         // Recuperation de l'user
         $user = $this->getUser();
         // Affectation selon le role de l'utilisateur
-        if ($user->getRoles()[1] === 'ROLE_REGION') return $this->redirectToRoute('regionale_edit',['slug'=>$activite->getSlug()]);
-        if($user->getRoles()[1] === 'ROLE_DISTRICT')die("C'est un commissaire de district");
-        if ($user->getRoles()[1] === 'ROLE_NATIONAL') return $this->redirectToRoute('nationale_edit',['slug'=>$activite->getSlug()]);
+        if ($user->getRoles()[1] === 'ROLE_REGION') return $this->redirectToRoute('regionale_index');
+        if($user->getRoles()[1] === 'ROLE_DISTRICT') return $this->redirectToRoute('districtal_index');
+        if ($user->getRoles()[1] === 'ROLE_NATIONAL') return $this->redirectToRoute('nationale_index');
 
         $form = $this->createForm(ActiviteType::class, $activite);
         $form->handleRequest($request);

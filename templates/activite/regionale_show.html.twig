@@ -1,0 +1,137 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{parent()}} Gestion des activités{% endblock %}
+
+{% block body %}
+    <section class="content-header">
+        <h1>
+            Gestion des activités
+            <!--<small>Gestion des activités</small>-->
+        </h1>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ path('homepage') }}"><i class="fa fa-dashboard"></i> Accueil</a></li>
+            <li class="breadcrumb-item"> Activités</li>
+            <li class="breadcrumb-item active">Consultation</li>
+        </ol>
+    </section>
+
+    <section class="content">
+        <div class="row mt-5 mb-5">
+            <div class="col text-right"><a href="{{ path('activite_index') }}" class="btn btn-success">Retour à la liste</a></div>
+        </div>
+        <div class="row" id="activite">
+            <div class="col-sm-12 col-md-12 grid-margin stretch-card"   >
+                <div class="card">
+                    <div class="card-body">
+                        {% for label, messages in app.flashes(['success','danger']) %}
+                            {% for message in messages %}
+                                <div class="alert alert-{{label}} alert-dismissible fade show" role="alert">
+                                    {{ message }}
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                            {% endfor %}
+                        {% endfor %}
+                        <div class="row">
+                            <div class="col-12">
+                                <ul class="timeline">
+                                    <li class="time-label">
+                                      <span class="bg-green">
+                                          {% if activite.district.region.slug == activite.district.slug %}
+                                              {{ activite.district.region.nom}}
+                                          {% else %}
+                                              {{ activite.district.region.nom}} :: {{ activite.district.nom }}
+                                          {% endif %}
+                                      </span>
+                                    </li>
+                                    <li>
+                                        <i class="fa fa-file bg-blue"></i>
+
+                                        <div class="timeline-item">
+                                            {% if activite.dateDebut == activite.dateFin %}
+                                                <span class="time"><i class="fa fa-calendar"></i> {{ activite.dateDebut|date('d-m-Y')}}</span>
+                                            {% else %}
+                                                <span class="time"><i class="fa fa-calendar"></i>
+                                                    du <strong>{{ activite.dateDebut|date('d-m-Y')}}</strong>
+                                                    au <strong>{{ activite.dateFin|date('d-m-Y') }}</strong>
+                                                </span>
+                                            {% endif %}
+
+                                            <h3 class="timeline-header">
+                                                <a href="#activite">{{ activite.titre }}</a>
+                                            </h3>
+                                            <div class="timeline-body">
+                                                {{ activite.objectif|raw }}
+                                            </div>
+
+                                            <h3 class="timeline-header no-border"><a href="#">Objectif(s)</a></h3>
+                                            <div class="timeline-body">
+                                                {{ activite.objectif|raw }}
+                                            </div>
+
+                                            <h3 class="timeline-header no-border"><a href="#">Resultat(s) attendu(s)</a></h3>
+                                            <div class="timeline-body">
+                                                {{ activite.resultat|raw }}
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <h5 class="timeline-header no-border"><strong>Lieu</strong></h5>
+                                                    <div class="timeline-body">
+                                                        {{ activite.lieu }}
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <h5 class="timeline-header no-border"><strong>RMO</strong></h5>
+                                                    <div class="timeline-body">
+                                                        {{ activite.rmo }}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <br><br>
+
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <h5 class="timeline-header no-border"><strong>Cible(s)</strong></h5>
+                                                    <div class="timeline-body">
+                                                        {% for participant in activite.participant %}
+                                                            {{participant.libelle}} -
+                                                        {% endfor %}
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <h5 class="timeline-header no-border"><strong>Departement(s) concerné(s)</strong></h5>
+                                                    <div class="timeline-body">
+                                                        {% for departement in activite.departement %}
+                                                            {{ departement.libelle }} -
+                                                        {% endfor %}
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="timeline-footer text-right">
+                                                <div class="row">
+                                                    <div class="col-sm-11 text-right">
+                                                        <a href="{{ path('regionale_edit', {'slug': activite.slug}) }}" class="btn btn-success btn-rounded">{{ 'form.btnUpdate'|trans}}</a>
+                                                    </div>
+                                                    <div class="col-sm-1 text-left">
+                                                        {{ include('activite/_delete_form.html.twig') }}
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <i class="fa fa-clock-o bg-gray"></i>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

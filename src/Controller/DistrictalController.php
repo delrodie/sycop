@@ -6,6 +6,7 @@ namespace App\Controller;
 
 use App\Entity\Activite;
 use App\Form\ActiviteType;
+use App\Form\DistrictalType;
 use App\Form\NationaleType;
 use App\Repository\ActiviteRepository;
 use App\Repository\GestionnaireRepository;
@@ -16,12 +17,12 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Route("/activite-nationale")
+ * @Route("/activite-de-district")
  */
-class NationaleController extends AbstractController
+class DistrictalController extends AbstractController
 {
     /**
-     * @Route("/", name="nationale_index", methods={"GET"})
+     * @Route("/", name="districtal_index", methods={"GET"})
      */
     public function index(ActiviteRepository $activiteRepository, GestionnaireRepository $gestionnaireRepository)
     {
@@ -29,7 +30,7 @@ class NationaleController extends AbstractController
         $user = $this->getUser(); //dd($user);
         // Affectation selon le role de l'utilisateur
         if ($user->getRoles()[1] === 'ROLE_REGION') return $this->redirectToRoute("regionale_index");
-        if($user->getRoles()[1] === 'ROLE_DISTRICT') return $this->redirectToRoute("districtal_index");
+        if($user->getRoles()[1] === 'ROLE_NATIONAL') return $this->redirectToRoute("nationale_index");
         if ($user->getRoles()[1] === 'ROLE_ADMIN') return $this->redirectToRoute('activite_index');
 
         //Recupération du district de l'utilisateur
@@ -38,13 +39,13 @@ class NationaleController extends AbstractController
         //Affichage des activités du district.
         $activites = $activiteRepository->findBy(['district'=>$gestionnaire->getDistrict()]);
 
-        return $this->render('activite/nationale_index.html.twig',[
+        return $this->render('activite/district_index.html.twig',[
             'activites' => $activites
         ]);
     }
 
     /**
-     * @Route("/new", name="nationale_new", methods={"GET","POST"})
+     * @Route("/new", name="districtal_new", methods={"GET","POST"})
      */
     public function new(Request $request, GestionActivite $gestionActivite, ActiviteRepository $activiteRepository, GestionnaireRepository $gestionnaireRepository)
     {
@@ -52,14 +53,14 @@ class NationaleController extends AbstractController
         $user = $this->getUser();
         // Affectation selon le role de l'utilisateur
         if ($user->getRoles()[1] === 'ROLE_REGION') return $this->redirectToRoute("regionale_new");
-        if($user->getRoles()[1] === 'ROLE_DISTRICT') return $this->redirectToRoute("districtal_new");
+        if($user->getRoles()[1] === 'ROLE_NATIONAL') return $this->redirectToRoute("nationale_new");
         if ($user->getRoles()[1] === 'ROLE_ADMIN') return $this->redirectToRoute('activite_new');
 
         //Recupération du district de l'utilisateur
         $gestionnaire = $gestionnaireRepository->findOneBy(['user'=>$user->getId()]);
 
         $activite = new Activite();
-        $form = $this->createForm(NationaleType::class, $activite, ['district'=>$gestionnaire->getDistrict()]);
+        $form = $this->createForm(DistrictalType::class, $activite, ['district'=>$gestionnaire->getDistrict()]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -69,12 +70,12 @@ class NationaleController extends AbstractController
             $slug = $gestionActivite->slug($activite);
             if ($activiteRepository->findOneBy(['slug'=>$slug])){
                 $this->addFlash('danger', "Oups!! Cette activité existe déjà pour ce district. En cas d'erreur veuillez revoir le titre de l'activité.");
-                return $this->redirectToRoute('activite_new');
+                return $this->redirectToRoute('districtal_new');
             }
-            else $activite->setSlug($slug);
+            else $activite->setSlug($slug); //dd($activite->getDistrict()->getCode());
 
             // Affectation du flag à l'activité
-            $flag = $gestionActivite->Flag($activite->getDistrict()->getCode());
+            $flag = $gestionActivite->Flag('03');
             $activite->setFlag($flag);
 
             // Recuperation de l'année en cours
@@ -88,41 +89,41 @@ class NationaleController extends AbstractController
 
             $this->addFlash('success', "Activité enregistrée avec succès!");
 
-            return $this->redirectToRoute('nationale_show',['slug'=>$activite->getSlug()]);
+            return $this->redirectToRoute('districtal_show',['slug'=>$activite->getSlug()]);
         }
 
-        return $this->render('activite/nationale_new.html.twig', [
+        return $this->render('activite/district_new.html.twig', [
             'activite' => $activite,
             'form' => $form->createView(),
         ]);
     }
 
     /**
-     * @Route("/{slug}", name="nationale_show", methods={"GET"})
+     * @Route("/{slug}", name="districtal_show", methods={"GET"})
      */
     public function show(Activite $activite): Response
     {
-        return $this->render('activite/nationale_show.html.twig', [
+        return $this->render('activite/district_show.html.twig', [
             'activite' => $activite,
         ]);
     }
 
     /**
-     * @Route("/{slug}/edit", name="nationale_edit", methods={"GET","POST"})
+     * @Route("/{slug}/edit", name="districtal_edit", methods={"GET","POST"})
      */
     public function edit(Request $request, Activite $activite, GestionActivite $gestionActivite, GestionnaireRepository $gestionnaireRepository): Response
     {
         // Recuperation de l'user
         $user = $this->getUser();
         // Affectation selon le role de l'utilisateur
-        if ($user->getRoles()[1] === 'ROLE_REGION') return $this->redirectToRoute('regionale_index');
-        if($user->getRoles()[1] === 'ROLE_DISTRICT') return $this->redirectToRoute('districtal_index');
+        if ($user->getRoles()[1] === 'ROLE_REGION') return $this->redirectToRoute("regionale_edit",['slug'=>$activite->getSlug()]);
+        if($user->getRoles()[1] === 'ROLE_NATIONAL') return $this->redirectToRoute("nationale_index");
         if ($user->getRoles()[1] === 'ROLE_ADMIN') return $this->redirectToRoute('activite_edit',['slug'=>$activite->getSlug()]);
 
         //Recupération du district de l'utilisateur
         $gestionnaire = $gestionnaireRepository->findOneBy(['user'=>$user->getId()]);
 
-        $form = $this->createForm(NationaleType::class, $activite, ['district'=>$gestionnaire->getDistrict()]);
+        $form = $this->createForm(DistrictalType::class, $activite, ['district'=>$gestionnaire->getDistrict()]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) { //dd($activite);
@@ -132,10 +133,10 @@ class NationaleController extends AbstractController
             $activite->setSlug($slug);
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('activite_index');
+            return $this->redirectToRoute('districtal_show',['slug'=>$activite->getSlug()]);
         }
 
-        return $this->render('activite/edit.html.twig', [
+        return $this->render('activite/district_edit.html.twig', [
             'activite' => $activite,
             'form' => $form->createView(),
         ]);

@@ -27,15 +27,16 @@ class RegionaleController extends AbstractController
         // Recuperation de l'user
         $user = $this->getUser(); //dd($user);
         // Affectation selon le role de l'utilisateur
-        if ($user->getRoles()[1] === 'ROLE_NATIONALE') return $this->redirectToRoute("nationale_index");
-        if($user->getRoles()[1] === 'ROLE_DISTRICT')die("C'est un commissaire de district");
+        if ($user->getRoles()[1] === 'ROLE_NATIONAL') return $this->redirectToRoute("nationale_index");
+        if($user->getRoles()[1] === 'ROLE_DISTRICT') return $this->redirectToRoute("districtal_index");
         if ($user->getRoles()[1] === 'ROLE_ADMIN') return $this->redirectToRoute('activite_index');
 
         //Recupération du district de l'utilisateur
-        $gestionnaire = $gestionnaireRepository->findOneBy(['user'=>$user->getId()]);//dd($gestionnaire);
+        $gestionnaire = $gestionnaireRepository->findOneBy(['user'=>$user->getId()]);//dd();
+        $regionID = $gestionnaire->getDistrict()->getRegion()->getId();
 
         //Affichage des activités du district.
-        $activites = $activiteRepository->findBy(['district'=>$gestionnaire->getDistrict()]);
+        $activites = $activiteRepository->findByRegion($regionID);
 
         return $this->render('activite/regionale_index.html.twig',[
             'activites' => $activites
@@ -50,8 +51,8 @@ class RegionaleController extends AbstractController
         // Recuperation de l'user
         $user = $this->getUser();
         // Affectation selon le role de l'utilisateur
-        if ($user->getRoles()[1] === 'ROLE_NATIONALE') return $this->redirectToRoute('nationale_new');
-        if($user->getRoles()[1] === 'ROLE_DISTRICT')die("C'est un commissaire de district");
+        if ($user->getRoles()[1] === 'ROLE_NATIONAL') return $this->redirectToRoute('nationale_new');
+        if($user->getRoles()[1] === 'ROLE_DISTRICT') return $this->redirectToRoute('districtal_new');
         if ($user->getRoles()[1] === 'ROLE_ADMIN') return $this->redirectToRoute('activite_new');
 
         //Recupération du district de l'utilisateur
@@ -87,12 +88,22 @@ class RegionaleController extends AbstractController
 
             $this->addFlash('success', "Activité enregistrée avec succès!");
 
-            return $this->redirectToRoute('activite_show',['slug'=>$activite->getSlug()]);
+            return $this->redirectToRoute('regionale_show',['slug'=>$activite->getSlug()]);
         }
 
         return $this->render('activite/regionale_new.html.twig', [
             'activite' => $activite,
             'form' => $form->createView(),
+        ]);
+    }
+
+    /**
+     * @Route("/{slug}", name="regionale_show", methods={"GET"})
+     */
+    public function show(Activite $activite): Response
+    {
+        return $this->render('activite/regionale_show.html.twig', [
+            'activite' => $activite,
         ]);
     }
 
@@ -104,9 +115,9 @@ class RegionaleController extends AbstractController
         // Recuperation de l'user
         $user = $this->getUser();
         // Affectation selon le role de l'utilisateur
-        if ($user->getRoles()[1] === 'ROLE_NATIONALE') return $this->redirectToRoute("nationale_edit",['slug'=>$activite->getSlug()]);
-        if($user->getRoles()[1] === 'ROLE_DISTRICT')die("C'est un commissaire de district");
-        if ($user->getRoles()[1] === 'ROLE_ADMIN') return $this->redirectToRoute('activite_new');
+        if ($user->getRoles()[1] === 'ROLE_NATIONAL') return $this->redirectToRoute("nationale_index");
+        if($user->getRoles()[1] === 'ROLE_DISTRICT') return $this->redirectToRoute("districtal_index");
+        if ($user->getRoles()[1] === 'ROLE_ADMIN') return $this->redirectToRoute('activite_edit',['slug'=>$activite->getSlug()]);
 
         //Recupération du district de l'utilisateur
         $gestionnaire = $gestionnaireRepository->findOneBy(['user'=>$user->getId()]);
@@ -123,7 +134,7 @@ class RegionaleController extends AbstractController
 
             $this->addFlash('success', "Activité modifiée avec succès!");
 
-            return $this->redirectToRoute('activite_show',['slug'=>$activite->getSlug()]);
+            return $this->redirectToRoute('regionale_show',['slug'=>$activite->getSlug()]);
         }
 
         return $this->render('activite/regionale_edit.html.twig', [

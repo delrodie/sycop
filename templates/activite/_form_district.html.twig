@@ -1,0 +1,53 @@
+{{ form_start(form) }}
+    <div class="row form-group">
+        <div class="col-lg-6 col-md-12 col-sm-12">
+            {{ form_row(form.district) }}
+        </div>
+        <div class="col-lg-6 col-md-12 col-sm-12">
+            {{ form_row(form.titre) }}
+        </div>
+    </div>
+    <div class="row form-group">
+        <div class="col">
+            {{ form_row(form.description) }}
+        </div>
+    </div>
+    <div class="row form-group">
+        <div class="col-lg-6 col-md-12">
+            {{ form_row(form.objectif) }}
+        </div>
+        <div class="col-lg-6 col-md-12">
+            {{ form_row(form.resultat) }}
+        </div>
+    </div>
+    <div class="row form-group">
+        <div class="col-lg-6 col-md-12">
+            {{ form_row(form.dateDebut) }}
+        </div>
+        <div class="col-lg-6 col-md-12">
+            {{ form_row(form.dateFin) }}
+        </div>
+    </div>
+    <div class="row form-group">
+        <div class="col-lg-6">
+            {{ form_row(form.lieu) }}
+        </div>
+        <div class="col-lg-6">
+            {{ form_row(form.rmo) }}
+        </div>
+    </div>
+    <div class="row form-group">
+        <div class="col-lg-6">
+            {{ form_row(form.participant) }}
+        </div>
+        <div class="col-lg-6">
+            {{ form_row(form.departement) }}
+        </div>
+    </div>
+    {{ form_widget(form) }}
+    <div class="form-group text-right">
+        <a href="{{ path('activite_index') }}" class="btn btn-light">{{ 'form.btnCancel'|trans }}</a>
+        <button class="btn btn-success btn-rounded">{{ button_label|default('form.btnSave'|trans) }}</button>
+    </div>
+
+{{ form_end(form) }}
