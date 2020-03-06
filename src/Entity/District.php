@@ -59,6 +59,11 @@ class District
      */
     private $activites;
 
+    /**
+     * @ORM\Column(type="string", length=2, nullable=true)
+     */
+    private $position;
+
     public function __construct()
     {
         $this->gestionnaires = new ArrayCollection();
@@ -200,6 +205,18 @@ class District
                 $activite->setDistrict(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getPosition(): ?string
+    {
+        return $this->position;
+    }
+
+    public function setPosition(?string $position): self
+    {
+        $this->position = $position;
 
         return $this;
     }

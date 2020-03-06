@@ -37,7 +37,7 @@ class DistrictalController extends AbstractController
         $gestionnaire = $gestionnaireRepository->findOneBy(['user'=>$user->getId()]);//dd($gestionnaire);
 
         //Affichage des activités du district.
-        $activites = $activiteRepository->findBy(['district'=>$gestionnaire->getDistrict()]);
+        $activites = $activiteRepository->findByDistrict($gestionnaire->getDistrict()->getId());
 
         return $this->render('activite/district_index.html.twig',[
             'activites' => $activites

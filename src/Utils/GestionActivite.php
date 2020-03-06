@@ -36,8 +36,10 @@ class GestionActivite
                 break;
             case '02':
                 $flag = 2;
+                break;
             case '03':
                 $flag = 3;
+                break;
         }
         return $flag;
     }

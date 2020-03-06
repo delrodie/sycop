@@ -115,7 +115,7 @@ class GestionUtilisateur
         // Liste des district
         $districts = $this->districtRepository->findByRegionWithoutUser($regionID);
         foreach ($districts as $district){
-            $username = $name.''.$district->getCode();
+            $username = $name.''.$district->getPosition();
             $mail = $username.'@scoutascci.org';
             $password = $this->generatePassword(6);
             $cle = '@scci-'.$password.'-v1.0#sycop!';

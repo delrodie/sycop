@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Page d'accueil{% endblock %}
+
+{% block body %}
+    <section class="content-header">
+        <h1>
+            Accueil
+            <small>Tableau de bord</small>
+        </h1>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ path('homepage') }}"><i class="fa fa-dashboard"></i> Accueil</a></li>
+            <li class="breadcrumb-item active">Tableau de bord</li>
+        </ol>
+    </section>
+
+{% endblock %}

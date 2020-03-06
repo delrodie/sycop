@@ -43,8 +43,6 @@
                                         <tr class="text-center">
                                             <th class="text-center">Id</th>
                                             <th class="text-center">Periode</th>
-                                            <th class="text-center">Region</th>
-                                            <th class="text-center">District</th>
                                             <th class="text-center">Titre</th>
                                             <th class="text-center">Desription</th>
                                             <th class="text-center">lieu</th>
@@ -60,13 +58,11 @@
                                             <tr>
                                                 <td>{{ loop.index }}</td>
                                                 <td>{{ activite.dateDebut|date('d-m-Y') }}&nbsp; ~ &nbsp;{{ activite.dateFin|date('d-m-Y') }}</td>
-                                                <td>{{ activite.district.region.nom }}</td>
-                                                <td>{{ activite.district.nom }}</td>
                                                 <td>
 
                                                     {{ activite.titre}}
                                                 </td>
-                                                <td>{{ activite.description|raw}}</td>
+                                                <td>{{ activite.description|slice(0,100)|raw}}. . .</td>
                                                 <td>{{ activite.lieu}}</td>
                                                 <td>{{ activite.rmo}}</td>
                                                 <td>
@@ -87,9 +83,11 @@
                                                     {% endif %}
                                                 </td>
                                                 <td class="text-center">
-                                                    <a href="{{ path('activite_show', {'slug': activite.slug}) }}"><i class="fa fa-eye"></i></a> |
-                                                    <a href="{{ path('nationale_edit', {'slug': activite.slug}) }}"><i class="fa fa-edit"></i></a> |
-                                                    <a href="{{ path('activite_edit', {'slug': activite.slug}) }}"><i class="fa fa-file"></i></a>
+                                                    <a href="{{ path('nationale_show', {'slug': activite.slug}) }}"><i class="fa fa-eye"></i></a> |
+                                                    {% if not activite.statut %}
+                                                        <a href="{{ path('nationale_edit', {'slug': activite.slug}) }}"><i class="fa fa-edit"></i></a> |
+                                                    {% endif %}
+                                                    <a href="#"><i class="fa fa-file"></i></a>
                                                 </td>
                                             </tr>
                                         {% endfor %}

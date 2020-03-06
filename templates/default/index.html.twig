@@ -5,13 +5,147 @@
 {% block body %}
     <section class="content-header">
         <h1>
-            Accueil
-            <small>Tableau de bord</small>
+            Tableau de bord
         </h1>
         <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="{{ path('homepage') }}"><i class="fa fa-dashboard"></i> Accueil</a></li>
+            <li class="breadcrumb-item"><a href="#"><i class="fa fa-dashboard"></i> Accueil</a></li>
             <li class="breadcrumb-item active">Tableau de bord</li>
         </ol>
     </section>
 
+    <section class="content">
+
+        <div class="row">
+
+            <div class="col-6 col-lg-3 col-md-3">
+                <div class="small-box bg-green">
+                    <div class="inner">
+                        <h3>67</h3>
+                        <p>Total activités</p>
+                    </div>
+                    <div class="icon">
+                        <i class="fa fa-bar-chart"></i>
+                    </div>
+                    <a href="#" class="small-box-footer">Voir liste <i class="fa fa-arrow-right"></i></a>
+                </div>
+            </div>
+
+            <div class="col-6 col-lg-3 col-md-3">
+                <div class="small-box bg-purple">
+                    <div class="inner">
+                        <h3>78</h3>
+                        <p>Tout le monde</p>
+                    </div>
+                    <div class="icon">
+                        <i class="fa fa-users"></i>
+                    </div>
+                    <a href="#" class="small-box-footer">Voir liste <i class="fa fa-arrow-right"></i></a>
+                </div>
+            </div>
+
+            <div class="col-6 col-lg-3 col-md-3">
+                <div class="small-box bg-red">
+                    <div class="inner">
+                        <h3>65</h3>
+                        <p>Adultes</p>
+                    </div>
+                    <div class="icon">
+                        <i class="fa fa-user-secret"></i>
+                    </div>
+                    <a href="#" class="small-box-footer">Voir plus <i class="fa fa-arrow-right"></i></a>
+                </div>
+            </div>
+
+            <div class="col-6 col-lg-3 col-md-3">
+                <div class="small-box bg-yellow">
+                    <div class="inner">
+                        <h3>65</h3>
+                        <p>Jeunes</p>
+                    </div>
+                    <div class="icon">
+                        <i class="fa fa-child"></i>
+                    </div>
+                    <a href="#" class="small-box-footer">Voir plus <i class="fa fa-arrow-right"></i></a>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-9 col-md-12 ">
+                <!-- Chat box -->
+                <div class="box">
+                    <div class="active tab-pane" id="timeline">
+                        <ul class="timeline">
+                            {% for activite in activites|slice(0,10) %}
+                                <li class="time-label">
+                                  <span class="bg-green">
+                                    {{ activite.dateDebut|date('d M Y')}}
+                                  </span>
+                                </li>
+                                <li>
+                                    <i class="fa fa-newspaper-o"></i>
+
+                                    <div class="timeline-item">
+                                        <span class="time"><i class="fa fa-calendar"></i> {{ activite.dateFin|date('d M Y')}}</span>
+
+                                        <h3 class="timeline-header">
+                                                {% if activite.flag == 1 %}
+                                                    <div class="badge badge-primary"> {{ activite.district.nom }}</div>
+                                                {% elseif activite.flag == 2 %}
+                                                    <div class="badge badge-danger">{{ activite.district.region.nom }}</div>
+                                                {% else %}
+                                                    <div class="badge badge-warning">{{ activite.district.region.nom }} - {{ activite.district.nom }}</div>
+                                                {% endif %}
+                                            : <a href="{{ path('activite_show', {'slug': activite.slug}) }}">{{ activite.titre}}</a>
+                                        </h3>
+
+                                        <div class="timeline-body">
+                                            {{ activite.description|slice(0,250)|raw}} . . .
+                                        </div>
+                                    </div>
+                                </li>
+                            {% endfor %}
+                            <li>
+                                <i class="fa fa-clock-o bg-gray"></i>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 hidden-md-down">
+                <div class="small-box bg-gray">
+                    <div class="inner">
+                        <h3>67</h3>
+                        <p>Equipe nationale</p>
+                    </div>
+                    <div class="icon">
+                        <i class="fa fa-institution"></i>
+                    </div>
+                    <a href="#" class="small-box-footer">Voir liste <i class="fa fa-arrow-right"></i></a>
+                </div>
+                <div class="small-box bg-gray">
+                    <div class="inner">
+                        <h3>78</h3>
+                        <p>Regions</p>
+                    </div>
+                    <div class="icon">
+                        <i class="fa fa-home"></i>
+                    </div>
+                    <a href="#" class="small-box-footer">Voir liste <i class="fa fa-arrow-right"></i></a>
+                </div>
+                <div class="small-box bg-gray">
+                    <div class="inner">
+                        <h3>65</h3>
+                        <p>District</p>
+                    </div>
+                    <div class="icon">
+                        <i class="fa fa-home"></i>
+                    </div>
+                    <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-right"></i></a>
+                </div>
+            </div>
+
+        </div>
+
+    </section>
 {% endblock %}

@@ -36,7 +36,7 @@ class NationaleController extends AbstractController
         $gestionnaire = $gestionnaireRepository->findOneBy(['user'=>$user->getId()]);//dd($gestionnaire);
 
         //Affichage des activités du district.
-        $activites = $activiteRepository->findBy(['district'=>$gestionnaire->getDistrict()]);
+        $activites = $activiteRepository->findByDistrict($gestionnaire->getDistrict()->getId());
 
         return $this->render('activite/nationale_index.html.twig',[
             'activites' => $activites
@@ -135,7 +135,7 @@ class NationaleController extends AbstractController
             return $this->redirectToRoute('activite_index');
         }
 
-        return $this->render('activite/edit.html.twig', [
+        return $this->render('activite/nationale_edit.html.twig', [
             'activite' => $activite,
             'form' => $form->createView(),
         ]);

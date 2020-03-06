@@ -39,9 +39,18 @@ class DistrictController extends AbstractController
             }
             // Recuperation du code du district
             $code = $gestionRegion->addNombreDistrict($district->getRegion());
+            $pos = $code;
+            if ($code === '01'){
+                $structure = substr($district->getNom(),7,9);
+                if ($structure === 'regionale') $code = "02";
+                else $code = "01";
+            }else{
+                $code = "03";
+            }
 
             $district->setSlug($slug);
             $district->setCode($code);
+            $district->setPosition($pos);
             $entityManager->persist($district);
             $entityManager->flush();
 

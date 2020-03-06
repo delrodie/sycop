@@ -62,7 +62,7 @@
 
                                                     {{ activite.titre}}
                                                 </td>
-                                                <td>{{ activite.description|raw}}</td>
+                                                <td>{{ activite.description|slice(0,100)|raw}}. . .</td>
                                                 <td>{{ activite.lieu}}</td>
                                                 <td>{{ activite.rmo}}</td>
                                                 <td>

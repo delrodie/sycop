@@ -110,16 +110,18 @@
                                                 </div>
                                             </div>
 
+                                            {% if not activite.statut %}
                                             <div class="timeline-footer text-right">
                                                 <div class="row">
                                                     <div class="col-sm-11 text-right">
                                                         <a href="{{ path('nationale_edit', {'slug': activite.slug}) }}" class="btn btn-success btn-rounded">{{ 'form.btnUpdate'|trans}}</a>
                                                     </div>
-                                                    <div class="col-sm-1 text-left">
-                                                        {{ include('activite/_delete_form.html.twig') }}
-                                                    </div>
+                                                        <div class="col-sm-1 text-left">
+                                                            {{ include('activite/_delete_form.html.twig') }}
+                                                        </div>
                                                 </div>
                                             </div>
+                                            {% endif %}
 
                                         </div>
                                     </li>

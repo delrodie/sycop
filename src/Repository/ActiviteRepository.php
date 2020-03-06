@@ -20,10 +20,32 @@ class ActiviteRepository extends ServiceEntityRepository
         parent::__construct($registry, Activite::class);
     }
 
+    /**
+     * Liste globales des activites non encore executées
+     *
+     * @return mixed
+     */
     public function findGlobal()
     {
         return $this->createQueryBuilder('a')
+            ->where('a.dateDebut >= :debut')
+            ->andWhere('a.statut = 1')
             ->orderBy('a.dateDebut', 'ASC')
+            ->setParameter('debut', date('Y-m-d', time()))
+            ->getQuery()->getResult()
+            ;
+    }
+
+    public function findByDistrict($district)
+    {
+        return $this->createQueryBuilder('a')
+            ->leftJoin('a.district', 'd')
+            ->where('d.id = :district')
+            ->andWhere('a.dateDebut >= :debut')
+            ->setParameters([
+                'district' => $district,
+                'debut' => date('Y-m-d', time())
+            ])
             ->getQuery()->getResult()
             ;
     }
@@ -40,8 +62,12 @@ class ActiviteRepository extends ServiceEntityRepository
             ->join('a.district', 'd')
             ->join('d.region', "r")
             ->where('r.id = :region')
+            ->andWhere('a.dateDebut >= :debut')
             ->orderBy('a.dateDebut', 'ASC')
-            ->setParameter('region',$region)
+            ->setParameters([
+                'region' => $region,
+                'debut' => date('Y-m-d',time())
+            ])
             ->getQuery()->getResult()
             ;
     }
