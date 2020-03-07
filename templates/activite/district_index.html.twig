@@ -84,8 +84,10 @@
                                                 </td>
                                                 <td class="text-center">
                                                     <a href="{{ path('districtal_show', {'slug': activite.slug}) }}"><i class="fa fa-eye"></i></a> |
-                                                    <a href="{{ path('districtal_edit', {'slug': activite.slug}) }}"><i class="fa fa-edit"></i></a> |
-                                                    <a href="{{ path('activite_edit', {'slug': activite.slug}) }}"><i class="fa fa-file"></i></a>
+                                                    {% if not activite.statut %}
+                                                        <a href="{{ path('districtal_edit', {'slug': activite.slug}) }}"><i class="fa fa-edit"></i></a> |
+                                                    {% endif %}
+                                                    <a href="{{ path('districtal_show', {'slug': activite.slug}) }}"><i class="fa fa-file"></i></a>
                                                 </td>
                                             </tr>
                                         {% endfor %}

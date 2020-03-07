@@ -137,6 +137,7 @@ class ActiviteRepository extends ServiceEntityRepository
         }
     }
 
+
     // ================== REGION ========//
 
     /**
@@ -168,6 +169,15 @@ class ActiviteRepository extends ServiceEntityRepository
             ;
     }
 
+    /**
+     * @param $annee
+     * @param $region
+     * @param $flag
+     * @param null $participant
+     * @return mixed
+     * @throws \Doctrine\ORM\NoResultException
+     * @throws \Doctrine\ORM\NonUniqueResultException
+     */
     public function findNombreByParticipantNiveauRegiona($annee, $region, $flag, $participant = null)
     {
         if (!$participant){
@@ -202,6 +212,46 @@ class ActiviteRepository extends ServiceEntityRepository
                     'annee' => $annee,
                     'flag'=> $flag,
                     'region' => $region
+                ])
+                ->getQuery()->getSingleScalarResult()
+                ;
+        }
+    }
+
+    /**
+     * ============================
+     * ======== DISTRICT ==========
+     * ============================
+     */
+
+    public function findNombreByParticipantNiveauDistrict($annee,$district, $statut = null)
+    {
+        if (!$statut){
+            return $this->createQueryBuilder('a')
+                ->select('COUNT(a.id)')
+                ->leftJoin('a.district','d')
+                ->where('d.id = :district')
+                ->andWhere('a.statut = 1')
+                ->andWhere('a.annee = :annee')
+                ->setParameters([
+                    'annee' => $annee,
+                    'district' => $district
+                ])
+                ->getQuery()->getSingleScalarResult()
+                ;
+        }else{
+            return $this->createQueryBuilder('a')
+                ->select('COUNT(DISTINCT a.id)')
+                ->leftJoin('a.district','d')
+                ->leftJoin('a.participant', 'p')
+                ->where('d.id = :district')
+                ->andWhere('a.statut = 1')
+                ->andWhere('a.annee = :annee')
+                ->andWhere('p.statut = :statut')
+                ->setParameters([
+                    'annee' => $annee,
+                    'district' => $district,
+                    'statut' => $statut
                 ])
                 ->getQuery()->getSingleScalarResult()
                 ;

@@ -39,7 +39,16 @@ class DefaultController extends AbstractController
 
         // SI l'utisateur est un district alors afficher template district
         if($user->getRoles()[1] === 'ROLE_DISTRICT') {
-
+            //Recupération du district de l'utilisateur
+            $gestionnaire = $gestionnaireRepository->findOneBy(['user'=>$user->getId()]);
+            $districtID = $gestionnaire->getDistrict()->getId();
+            return $this->render('default/index_district.html.twig', [
+                'current_menu' => 'Accueil',
+                'activites' => $activiteRepository->findByDistrict($districtID),
+                'total_activite' =>$activiteRepository->findNombreByParticipantNiveauDistrict($annee, $districtID),
+                'activite_jeune' => $activiteRepository->findNombreByParticipantNiveauDistrict($annee, $districtID,'JEUNE'),
+                'activite_adulte' => $activiteRepository->findNombreByParticipantNiveauDistrict($annee, $districtID,'ADULTE')
+            ]);
         }
 
         return $this->render('default/index.html.twig', [
