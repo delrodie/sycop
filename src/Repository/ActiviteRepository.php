@@ -36,6 +36,10 @@ class ActiviteRepository extends ServiceEntityRepository
             ;
     }
 
+    /**
+     * @param $district
+     * @return mixed
+     */
     public function findByDistrict($district)
     {
         return $this->createQueryBuilder('a')
@@ -70,6 +74,44 @@ class ActiviteRepository extends ServiceEntityRepository
             ])
             ->getQuery()->getResult()
             ;
+    }
+
+    /**
+     * Nombre d'activité selon la structure
+     *
+     * @param $structre
+     * @return mixed
+     * @throws \Doctrine\ORM\NoResultException
+     * @throws \Doctrine\ORM\NonUniqueResultException
+     */
+    public function findNombreByStructure($structre)
+    {
+        return $this->createQueryBuilder('a')
+            ->select('count(a.id)')
+            ->where('a.flag = :structure')
+            ->setParameter('structure',$structre)
+            ->getQuery()->getSingleScalarResult()
+            ;
+    }
+    public function findNombreByParticipant($participant = null)
+    {
+        if (!$participant){
+            return $this->createQueryBuilder('a')
+                ->select('count(a.id)')
+                ->where('a.statut = 1')
+                ->getQuery()->getSingleScalarResult()
+                ;
+        }else{
+            return $this->createQueryBuilder('a')
+                ->select('count(DISTINCT a.id)')
+                ->leftJoin('a.participant','p')
+                //->innerJoin('a.participant', 'p')
+                ->where('a.statut = 1')
+                ->andWhere('p.statut = :statut')
+                ->setParameter('statut', $participant)
+                ->getQuery()->getSingleScalarResult()
+                ;
+        }
     }
 
     // /**
