@@ -20,7 +20,7 @@ class ActiviteController extends AbstractController
     /**
      * @Route("/", name="activite_index", methods={"GET"})
      */
-    public function index(ActiviteRepository $activiteRepository): Response
+    public function index(ActiviteRepository $activiteRepository, GestionActivite $gestionActivite): Response
     {
         // Recuperation de l'user
         $user = $this->getUser();
@@ -30,7 +30,7 @@ class ActiviteController extends AbstractController
         if ($user->getRoles()[1] == 'ROLE_NATIONAL') return $this->redirectToRoute('nationale_index');
 
         return $this->render('activite/index.html.twig', [
-            'activites' => $activiteRepository->findGlobal(),
+            'activites' => $activiteRepository->findGlobal($gestionActivite->annee()),
         ]);
     }
 

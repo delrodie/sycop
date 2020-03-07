@@ -25,13 +25,17 @@ class ActiviteRepository extends ServiceEntityRepository
      *
      * @return mixed
      */
-    public function findGlobal()
+    public function findGlobal($annee)
     {
         return $this->createQueryBuilder('a')
             ->where('a.dateDebut >= :debut')
             ->andWhere('a.statut = 1')
+            ->andWhere('a.annee = :annee')
             ->orderBy('a.dateDebut', 'ASC')
-            ->setParameter('debut', date('Y-m-d', time()))
+            ->setParameters([
+                'debut' => date('Y-m-d', time()),
+                'annee' => $annee
+            ])
             ->getQuery()->getResult()
             ;
     }
@@ -84,21 +88,36 @@ class ActiviteRepository extends ServiceEntityRepository
      * @throws \Doctrine\ORM\NoResultException
      * @throws \Doctrine\ORM\NonUniqueResultException
      */
-    public function findNombreByStructure($structre)
+    public function findNombreByStructure($annee, $structre)
     {
         return $this->createQueryBuilder('a')
             ->select('count(a.id)')
             ->where('a.flag = :structure')
-            ->setParameter('structure',$structre)
+            ->andWhere('a.annee = :annee')
+            ->setParameters([
+                'structure' => $structre,
+                'annee' => $annee
+            ])
             ->getQuery()->getSingleScalarResult()
             ;
     }
-    public function findNombreByParticipant($participant = null)
+
+    /**
+     * Nombre d'activité concerné par le statut des participantc (jeune ou adulte)
+     *
+     * @param null $participant
+     * @return mixed
+     * @throws \Doctrine\ORM\NoResultException
+     * @throws \Doctrine\ORM\NonUniqueResultException
+     */
+    public function findNombreByParticipant($annee, $participant = null)
     {
         if (!$participant){
             return $this->createQueryBuilder('a')
                 ->select('count(a.id)')
                 ->where('a.statut = 1')
+                ->andWhere('a.annee = :annee')
+                ->setParameter('annee', $annee)
                 ->getQuery()->getSingleScalarResult()
                 ;
         }else{
@@ -107,8 +126,83 @@ class ActiviteRepository extends ServiceEntityRepository
                 ->leftJoin('a.participant','p')
                 //->innerJoin('a.participant', 'p')
                 ->where('a.statut = 1')
+                ->andWhere('a.annee = :annee')
                 ->andWhere('p.statut = :statut')
-                ->setParameter('statut', $participant)
+                ->setParameters([
+                    'statut'=> $participant,
+                    'annee' => $annee
+                ])
+                ->getQuery()->getSingleScalarResult()
+                ;
+        }
+    }
+
+    // ================== REGION ========//
+
+    /**
+     * Nombre d'activité selon la structure au niveau de regional
+     *
+     * @param $annee
+     * @param $region
+     * @param $flag
+     * @return mixed
+     * @throws \Doctrine\ORM\NoResultException
+     * @throws \Doctrine\ORM\NonUniqueResultException
+     */
+    public function findNombreByStructureNiveauRegion($annee, $region, $flag)
+    {
+        return $this->createQueryBuilder('a')
+            ->select('COUNT(a.id)')
+            ->leftJoin('a.district','d')
+            ->leftJoin('d.region', 'r')
+            ->where('a.flag = :flag')
+            ->andWhere('r.id = :region')
+            ->andWhere('a.statut = 1')
+            ->andWhere('a.annee = :annee')
+            ->setParameters([
+                'region'=> $region,
+                'annee' => $annee,
+                'flag' => $flag
+            ])
+            ->getQuery()->getSingleScalarResult()
+            ;
+    }
+
+    public function findNombreByParticipantNiveauRegiona($annee, $region, $flag, $participant = null)
+    {
+        if (!$participant){
+            return $this->createQueryBuilder('a')
+                ->select('count(a.id)')
+                ->leftJoin('a.district','d')
+                ->leftJoin('d.region', 'r')
+                ->where('a.statut = 1')
+                ->andWhere('a.annee = :annee')
+                ->andWhere('a.flag = :flag')
+                ->andWhere('r.id = :region')
+                ->setParameters([
+                    'annee'=> $annee,
+                    'flag'=> $flag,
+                    'region' => $region
+                ])
+                ->getQuery()->getSingleScalarResult()
+                ;
+        }else{
+            return $this->createQueryBuilder('a')
+                ->select('count(DISTINCT a.id)')
+                ->leftJoin('a.participant','p')
+                ->leftJoin('a.district','d')
+                ->leftJoin('d.region', 'r')
+                ->where('a.statut = 1')
+                ->andWhere('a.annee = :annee')
+                ->andWhere('p.statut = :statut')
+                ->andWhere('a.flag = :flag')
+                ->andWhere('r.id = :region')
+                ->setParameters([
+                    'statut'=> $participant,
+                    'annee' => $annee,
+                    'flag'=> $flag,
+                    'region' => $region
+                ])
                 ->getQuery()->getSingleScalarResult()
                 ;
         }
